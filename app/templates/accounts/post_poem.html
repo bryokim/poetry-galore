@@ -16,14 +16,14 @@
         </div>
 
         <div class="form-floating">
-          {{ form.poem_body(placeholder="body", class="form-control mb-4", rows="10")}} {{
+          {{ form.poem_body(placeholder="body", class="form-control mb-4", style="height:400px;")}} {{
           form.poem_body.label}} {% if form.poem_body.errors %} {% for error in
           form.poem_body.errors %}
           <div class="form-text text-danger text-center">{{ error }}</div>
           {% endfor %} {% endif %}
         </div>
 
-        <button class="w-50 btn btn-lg btn-primary" type="submit">Post</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Post</button>
 
       </form>
     </main>
