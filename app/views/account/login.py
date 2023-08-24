@@ -25,7 +25,10 @@ def login():
         if user and bcrypt.check_password_hash(
             user.password, form.password.data
         ):
-            login_user(user, duration=timedelta(minutes=1))
+            if form.remember_me.data:
+                login_user(user, remember=True, duration=timedelta(minutes=30))
+            else:
+                login_user(user)
             return redirect(url_for("accounts_view.home"))
         else:
             flash("Invalid email/password", "danger")
