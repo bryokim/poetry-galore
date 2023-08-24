@@ -1,0 +1,53 @@
+{% extends "_base.html" %} {% block content %}
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-6">
+    <div class="card text-center text-bg-dark border-secondary">
+      <div class="card-body">
+        <h3 class="card-title">{{ poem.title }}</h3>
+        <p class="card-text" style="white-space: pre-wrap;">{{ poem.body }}</p>
+        <footer class="blockquote-footer text-end mb-0">
+          {{ poem.user.username }}
+        </footer>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5 mt-5 mt-md-0">
+    <div class="card text-bg-dark border-secondary">
+      <div class="card-header border-secondary"><h5>Comments</h5></div>
+      <div class="card-body">
+        <ul class="list-unstyled">
+          {% for comment in poem.comments|sort(attribute='created_at') %}
+          <li>
+            <h6 class="text-white font-monospace">{{ comment.user.username }}
+                {% if poem.user_id == comment.user_id %}
+                <span class="badge text-bg-secondary">Author</span>
+                {% endif %}
+            </h6>
+            <p class="text-secondary font-monospace">{{ comment.text }}</p>
+          </li>
+          <hr class="dropdown-divider" />
+          {% endfor %}
+        </ul>
+        <form
+          class="d-flex mt-3"
+          role="comment"
+          action="{{ url_for('core_view.create_comment', poem_id=poem.id) }}"
+          method="post"
+        >
+          <input
+            type="text"
+            class="form-control me-2 input-sm"
+            placeholder="comment"
+            name="text"
+            required
+          />
+          <button class="btn btn-outline-success btn-sm" type="submit">
+            Comment
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends '_base.html' %} {% block content %}
+
+<div class="row">
+  <div class="col-md-4">
+    <form class="d-flex mt-3 mb-4" method="post" action="">
+      <input class="form-control me-2" type="search" placeholder="Search..." />
+      <button class="btn btn-outline-primary btn-sm" type="submit">
+        Search
+      </button>
+    </form>
+  </div>
+  <div class="col-md-4">
+    {% for poem in poems.values() %}
+    <div class="card text-center border-secondary mb-5">
+      <!-- <div class="card-header">
+                    </div> -->
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{{ url_for('core_view.get_poem', poem_id=poem.id) }}"
+          class="link-info link-underline-opacity-25 link-underline-opacity-50-hover"
+            >{{ poem.title }}</a
+          >
+        </h5>
+        <p class="card-text" style="white-space: pre-wrap;">{{ poem.body }}</p>
+
+        <footer class="blockquote-footer text-end mb-0">
+          {{ poem.user.username }}
+        </footer>
+      </div>
+      <!-- <div class="card-footer">
+                        <h6 class="card-subtitle text-body-secondary mb-2 text-end">{{ poem.user.username }}</h6>
+                    </div> -->
+    </div>
+    {% endfor %}
+  </div>
+  <div class="col-md-4">
+    <form class="d-flex mt-3 mb-5" method="post" action="">
+      <input class="form-control me-2" type="search" placeholder="Search..." />
+      <button class="btn btn-outline-primary border-0 btn-sm" type="submit">
+        Search
+      </button>
+    </form>
+
+    <div class="card border-secondary">
+      <div class="card-header">Themes</div>
+      <div class="card-body">
+        <p class="card-text">Themes you can search by</p>
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <a href="#" class="btn btn-outline-primary btn-sm border-0"
+              >#Happy</a
+            >
+          </li>
+          <li class="list-inline-item">
+            <a href="#" class="btn btn-outline-secondary btn-sm border-0">#Sad</a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#" class="btn btn-outline-info btn-sm border-0">#Where</a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#" class="btn btn-outline-warning btn-sm border-0">#Here</a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#" class="btn btn-outline-light btn-sm border-0">#Hello</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
