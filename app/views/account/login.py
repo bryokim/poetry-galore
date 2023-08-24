@@ -1,9 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from flask import (
     flash,
     request,
     redirect,
     render_template,
+    session,
     url_for,
 )
 from flask_login import login_user
@@ -29,6 +30,12 @@ def login():
                 login_user(user, remember=True, duration=timedelta(minutes=30))
             else:
                 login_user(user)
+
+            if "next" in session:
+                next_url = session["next"]
+                del session["next"]
+                return redirect(next_url)
+
             return redirect(url_for("accounts_view.home"))
         else:
             flash("Invalid email/password", "danger")
