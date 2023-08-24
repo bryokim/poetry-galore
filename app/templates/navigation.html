@@ -1,50 +1,4 @@
-<!-- Navigation
-<header class="p-3 text-bg-dark">
-  <div class="container-fluid">
-    <div
-      class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
-    >
-      <ul
-        class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
-      >
-        <li>
-          
-        </li>
-      </ul>
-
-      <ul class="nav nav-pills text-end" translate="no">
-        {% if current_user.is_authenticated %}
-        <li class="nav-item active">
-          <a
-            class="nav-link"
-            href="{{ url_for('accounts_view.logout') }}"
-            data-toggle="pill"
-            >Logout</a
-          >
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a
-            class="nav-link active"
-            href="{{ url_for('accounts_view.login') }}"
-            data-toggle="pill"
-            >Login</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            href="{{ url_for('accounts_view.register') }}"
-            data-toggle="pill"
-            >Signup</a
-          >
-        </li>
-        {% endif %}
-      </ul>
-    </div>
-  </div>
-</header> -->
-
+<!-- Navigation -->
 <nav class="nav bg-dark border-bottom border-body p-3" data-bs-theme="dark">
   <div class="container-fluid">
     <div
@@ -166,17 +120,6 @@
           </a>
         </li>
       </ul>
-
-      <!-- <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
 
       <div class="container-fluid">
         <div
