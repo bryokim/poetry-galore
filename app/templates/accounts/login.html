@@ -9,9 +9,9 @@
         <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
 
         <div class="form-floating">
-          {{ form.email(placeholder="email", class="form-control mb-2") }} {{
-          form.email.label }} {% if form.email.errors %} {% for error in
-          form.email.errors %}
+          {{ form.username(placeholder="username", class="form-control mb-2") }} {{
+          form.username.label }} {% if form.username.errors %} {% for error in
+          form.username.errors %}
           <div class="alert alert-danger">{{ error }}</div>
           {% endfor %} {% endif %}
         </div>
