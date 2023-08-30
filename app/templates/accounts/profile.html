@@ -1,0 +1,71 @@
+{% extends "_base.html" %} {% block content %}
+<div class="row d-flex flex-column flex-sm-row">
+  <div class="col-sm-4 mb-5">
+    <div class="container mb-4 d-flex justify-content-center">
+      <img
+        src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+        class="rounded-circle"
+        height="150"
+        alt="Black and White Portrait of a Man"
+        loading="lazy"
+      />
+    </div>
+    <div class="container text-center mb-3">
+      <mark>{{ current_user.username }}</mark>
+    </div>
+
+    <hr class="exc-divider" />
+
+    <div class="d-flex justify-content-around align-content-center mb-3">
+      <h6>10 <span class="badge rounded-pill text-bg-info">Followers</span></h6>
+      <p class="badge rounded-pill text-bg-info">100 Following</p>
+    </div>
+
+    <div>
+      <p class="">Your likes: 66</p>
+      <p class="">Liked: 100</p>
+    </div>
+  </div>
+  <div class="col-sm-8 col-xl-6 text-center">
+    <div class="container">
+      <h3 class="mb-4 text-body-tertiary">Your creations</h3>
+      <div class="row row-cols-1 g-4">
+        {% for poem in current_user.poems %}
+        <div class="col">
+          <div class="card text-center border-secondary mb-5">
+            <div class="card-body">
+              <h5 class="card-title">
+                <a
+                  href="{{ url_for('core_view.get_poem', poem_id=poem.id) }}"
+                  class="link-info link-underline-opacity-25 link-underline-opacity-50-hover"
+                  >{{ poem.title }}</a
+                >
+              </h5>
+              <p class="card-text" style="white-space: pre-wrap">
+                {{ poem.body }}
+              </p>
+
+              <footer class="blockquote-footer text-end mb-0">
+                {{ poem.user.username }}
+              </footer>
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% if not current_user.poems %}
+        <div class="col">
+          <p>You have not written a poem yet 😶‍🌫️.<br></p>
+          <p>
+            <a
+              href="{{ url_for('core_view.create_poem') }}"
+              class="btn about text-decoration-none text-info"
+              >Create one now 🧐.</a
+            >
+          </p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col col-xl-2 visually-hidden">Some text</div>
+</div>
+{% endblock %}
