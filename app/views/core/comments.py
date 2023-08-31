@@ -1,7 +1,15 @@
 """Endpoints for dealing with comments.
 """
-
-from flask import abort, jsonify, make_response, redirect, request, url_for
+from datetime import datetime
+from flask import (
+    abort,
+    jsonify,
+    make_response,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from flask_login import current_user, fresh_login_required, login_required
 
 from app.views import core_view
@@ -9,6 +17,7 @@ from app.models.comment import Comment
 from app.models.poem import Poem
 from app.models.user import User
 from app.models.engine.db_storage import DBStorage
+from app.forms.comment import CommentForm
 
 
 @core_view.route("/comments")
@@ -58,30 +67,30 @@ def create_comment(poem_id):
         dict: The newly created comment.
     """
     poem = DBStorage().get(Poem, poem_id)
-    text = request.form.get("text")
 
     if not poem:
         abort(404)
 
-    if not text:
-        return redirect(url_for("core_view.get_poem", poem_id=poem_id))
-
     if DBStorage().get_by_attribute(
         Comment, user_id=current_user.id, poem_id=poem_id
     ):
-        return redirect(url_for("core_view.get_poem", poem_id=poem_id))
+        return render_template("core/poem.html", poem=poem)
 
-    data = {"poem_id": poem_id, "user_id": current_user.id, "text": text}
+    data = {
+        "poem_id": poem_id,
+        "user_id": current_user.id,
+        "text": request.form.get("comment"),
+    }
 
     comment = Comment(**data)
 
     DBStorage().new(comment)
     DBStorage().save()
 
-    return redirect(url_for("core_view.get_poem", poem_id=poem_id))
+    return render_template("core/poem.html", poem=poem)
 
 
-@core_view.route("/poems/<poem_id>/comments/<comment_id>", methods=["UPDATE"])
+@core_view.route("/poems/<poem_id>/comments/<comment_id>/update")
 @login_required
 def update_comment(poem_id, comment_id):
     """Update a comment.
@@ -96,27 +105,18 @@ def update_comment(poem_id, comment_id):
     """
     poem = DBStorage().get(Poem, poem_id)
     comment = DBStorage().get(Comment, comment_id)
-    data = request.get_json(silent=True)
+    text = request.args.get("text")
 
-    if not comment or not poem:
-        abort(404)
-
-    if not data:
-        abort(400, description="Invalid JSON")
-
-    ignore_keys = ["id", "created_at", "updated_at", "user_id", "poem_id"]
-
-    for key, value in data.items():
-        if key not in ignore_keys:
-            setattr(comment, key, value)
+    comment.text = text
+    comment.updated_at = datetime.utcnow()
 
     DBStorage().new(comment)
     DBStorage().save()
 
-    return make_response(jsonify(comment.to_dict()))
+    return render_template("core/poem.html", poem=poem)
 
 
-@core_view.route("/poems/<poem_id>/comments/<comment_id>", methods=["DELETE"])
+@core_view.route("/poems/<poem_id>/comments/<comment_id>/delete")
 @login_required
 def delete_comment(poem_id, comment_id):
     """Delete a comment.
@@ -132,8 +132,11 @@ def delete_comment(poem_id, comment_id):
     poem = DBStorage().get(Poem, poem_id)
     comment = DBStorage().get(Comment, comment_id)
 
-    if not poem or not comment:
+    if not poem:
         abort(404)
+
+    if not comment:
+        render_template("core/poem.html", poem=poem)
 
     # if current_user.id != comment.user_id:
     #     abort(
@@ -144,4 +147,4 @@ def delete_comment(poem_id, comment_id):
     DBStorage().delete(comment)
     DBStorage().save()
 
-    return make_response(jsonify({}))
+    return render_template("core/poem.html", poem=poem)

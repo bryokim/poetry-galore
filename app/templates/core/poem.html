@@ -4,13 +4,31 @@
   <div class="col-md-6">
     <div class="card text-center text-bg-dark border-secondary">
       <div class="card-body">
-        <h3 class="card-title">{{ poem.title }}</h3>
-        <p class="card-text" style="white-space: pre-wrap;">{{ poem.body }}</p>
+        <h3 class="card-title text-info">{{ poem.title }}</h3>
+        <p class="card-text" style="white-space: pre-wrap">{{ poem.body }}</p>
         <footer class="blockquote-footer text-end mb-0">
-          {{ poem.user.username }}
+          <a
+            href="{{ url_for('core_view.get_user_profile', username=poem.user.username) }}"
+            class="text-white link-underline link-underline-info link-underline-opacity-25 link-underline-opacity-100-hover link-offset-2"
+          >
+            <i>{{ poem.user.username }}</i>
+          </a>
         </footer>
       </div>
     </div>
+    {% if current_user == poem.user %}
+    <a
+      href="{{ url_for('core_view.delete_poem', poem_id=poem.id) }}"
+      class="btn btn-outline-danger mt-3"
+      >Delete</a
+    >
+
+    <!-- <a
+      href="{{ url_for('core_view.update_poem', poem_id=poem.id) }}"
+      class="btn btn-outline-danger mt-3"
+      >Delete</a
+    > -->
+    {% endif %}
   </div>
   <div class="col-md-5 mt-5 mt-md-0">
     <div class="card text-bg-dark border-secondary">
@@ -18,17 +36,43 @@
       <div class="card-body">
         <ul class="list-unstyled">
           {% for comment in poem.comments|sort(attribute='created_at') %}
-          <li>
-            <h6 class="text-white font-monospace">{{ comment.user.username }}
-                {% if poem.user_id == comment.user_id %}
-                <span class="badge text-bg-secondary">Author</span>
-                {% endif %}
+          <li class="mb-1 comment-item position-relative">
+            <h6 class="text-white font-monospace mb-0">
+              <a
+                href="{{ url_for('core_view.get_user_profile', username=comment.user.username) }}"
+                class="text-decoration-none text-"
+                >{{ comment.user.username }}</a
+              >
+              {% if poem.user_id == comment.user_id %}
+              <span class="badge text-bg-secondary">Author</span>
+              {% endif %}
             </h6>
-            <p class="text-secondary font-monospace">{{ comment.text }}</p>
+            <p
+              class="text-secondary font-monospace mb-0"
+              data-id="{{ comment.id }}"
+              id="{{ comment.id }}"
+            >
+              {{ comment.text }}
+            </p>
+            {% if current_user == comment.user %}
+            <a
+              class="delete-comment link-danger link-offset-2 link-underline-opacity-10  link-underline-opacity-75-hover position-absolute top-0 end-0"
+              href="{{ url_for('core_view.delete_comment', comment_id=comment.id, poem_id=poem.id) }}"
+              >Delete</a
+            >
+            <a
+              class="update-comment link-offset-2 link-light link-underline-opacity-10 link-underline-opacity-75-hover position-absolute top-0"
+              style="right: 60px;"
+              data-comment-id="{{ comment.id }}"
+              data-poem-id = "{{ comment.poem_id }}"
+              >Edit</a
+            >
+            {% endif %}
           </li>
-          <hr class="dropdown-divider" />
+          <hr class="divider mt-0" />
           {% endfor %}
         </ul>
+        {% if current_user.is_authenticated %}
         <form
           class="d-flex mt-3"
           role="comment"
@@ -36,17 +80,26 @@
           method="post"
         >
           <input
-            type="text"
-            class="form-control me-2 input-sm"
-            placeholder="comment"
-            name="text"
-            required
-          />
-          <button class="btn btn-outline-success btn-sm" type="submit">
+          type="text"
+          class="form-control me-3"
+          placeholder="Comment"
+          name="comment"
+          >
+          <button
+            class="btn btn-outline-success btn-sm comment-btn h-auto"
+            data-id="{{ poem.id }}"
+            type="submit"
+          >
             Comment
           </button>
         </form>
+        {% endif %}
       </div>
+    </div>
+    <div class="text-center mt-3">
+      {% if not current_user.is_authenticated %}
+        <p><a href="{{ url_for('accounts_view.login', next='/api/v1/poems/{}'.format(poem.id)) }}">Login</a> to comment</p>
+      {% endif %}
     </div>
   </div>
 </div>
