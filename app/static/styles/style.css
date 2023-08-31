@@ -5,3 +5,42 @@
   position: relative;
   z-index: 2;
 }
+
+.update-comment {
+  display: none;
+  cursor: pointer;
+}
+
+.delete-comment {
+  display: none;
+}
+
+.comment-item:hover .update-comment,
+.comment-item:hover .delete-comment {
+  display: block;
+}
+
+.update-comment-input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid white;
+  width: 70%;
+}
+
+.update-comment-button {
+  border-radius: 4px;
+  text-align: center;
+  background: none;
+  padding: 3px;
+  margin: 0;
+  border: none;
+  font-size: 16px;
+  width: 50px;
+}
+
+.update-comment-button:hover {
+  border: 1px solid green;
+  padding: 2px;
+  color: green;
+}
