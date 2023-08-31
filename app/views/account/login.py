@@ -51,6 +51,9 @@ def login():
                 next_url = session["next"]
                 del session["next"]
                 return redirect(next_url)
+            elif "next" in request.args:
+                next_url = request.args["next"]
+                return redirect(next_url)
 
             return redirect(url_for("accounts_view.home"))
         else:
