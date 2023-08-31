@@ -1,3 +1,5 @@
+"""Module for searching logic applied to different elements."""
+
 from flask import (
     abort,
     jsonify,
@@ -49,6 +51,13 @@ def search_poems():
 
 @core_view.route("/search_by_theme", methods=["POST"])
 def search_by_theme():
+    """Search for poems by themes.
+
+    Returns:
+        List: List of all the invalid poem ids. These poem ids
+        are used in hiding or showing poems not matching the search from
+        the document.
+    """
     data = request.get_json(silent=True)
 
     if not data:
