@@ -1,189 +1,196 @@
 <!-- Navigation -->
-<nav class="nav bg-dark border-bottom border-body p-2 p-lg-3" data-bs-theme="dark">
-  <!-- <div class="container-fluid"> -->
-  <div
-    class="row w-100 d-flex flex-wrap align-items-center justify-content-around justify-content-lg-around"
-  >
-    <div class="col-sm-4">
-      <ul class="nav">
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            data-bs-toggle="offcanvas"
-            href="#offcanvasNavbar"
-            role="button"
-            aria-controls="offcanvasNavbar"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </a>
-        </li>
-      </ul>
-    </div>
+<nav
+  class="nav bg-dark border-bottom border-body pe-0 ps-0 p-3 p-lg-3 sticky-top"
+  data-bs-theme="dark"
+>
+  <div class="container-fluid">
+    <div class="row w-100 d-flex flex-nowrap align-items-center">
+      <div class="col-1 col-sm-4">
+        <ul class="nav d-none d-sm-flex">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              data-bs-toggle="offcanvas"
+              href="#offcanvasNavbar"
+              role="button"
+              aria-controls="offcanvasNavbar"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </a>
+          </li>
+        </ul>
+      </div>
 
-    <div class="col-sm-4 d-flex justify-content-center">
-      <ul class="nav">
-        <li class="nav-item">
-          <a href="{{ url_for('accounts_view.home') }}">
-            <img
-              src="/static/images/logo-no-background.svg"
-              alt="poetry galore"
-              style="width: 200px; height: auto"
-            />
-          </a>
-        </li>
-      </ul>
-    </div>
+      <div class="col-4 d-flex justify-content-center">
+        <ul class="nav">
+          <li class="nav-item">
+            <a href="{{ url_for('accounts_view.home') }}">
+              <img
+                src="/static/images/logo-no-background.svg"
+                class="logo"
+                alt="poetry galore"
+                loading="lazy"
+              />
+            </a>
+          </li>
+        </ul>
+      </div>
 
-    <div class="col-sm-4 d-flex justify-content-end">
-      <ul class="nav">
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            href="{{ url_for('core_view.create_poem') }}"
-            aria-current="page"
-            ><button class="btn btn-outline-info border-0 btn-sm">
-              Create
-            </button></a
-          >
-        </li>
+      <div class="col-7 col-sm-4 d-flex flex-nowrap justify-content-end">
+        <ul class="nav">
+          {% if current_user.is_authenticated %}
 
-        {% if current_user.is_authenticated %}
-        <li class="nav-item">
-          <a
-            class="nav-link active"
-            href="{{ url_for('accounts_view.logout') }}"
-            aria-current="page"
-            ><button class="btn btn-outline-danger border-0 btn-sm">
-              Logout
-            </button></a
-          >
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link active" href="{{ url_for('accounts_view.login') }}"
-            ><button class="btn btn-outline-primary border-0 btn-sm">
-              Login
-            </button></a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('accounts_view.register') }}"
-            ><button class="btn btn-outline-success border-0 btn-sm">
-              Signup
-            </button></a
-          >
-        </li>
-        {% endif %}
+          <li class="nav-item me-lg-2 me-0">
+            <a
+              class="nav-link"
+              href="{{ url_for('core_view.create_poem') }}"
+              aria-current="page"
+              ><button class="btn btn-outline-info border-0 btn-sm">
+                Create
+              </button></a
+            >
+          </li>
 
-        <li class="nav-item dropdown dropdown-menu-dark">
-          <a
-            class="nav-link dropdown"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-              class="rounded-circle"
-              height="25"
-              alt="Black and White Portrait of a Man"
-              loading="lazy"
-            />
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">My profile</a></li>
-            <li>
-              <a class="dropdown-item" href="#">Settings</a>
-            </li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                href="{{ url_for('accounts_view.logout') }}"
-                >Logout</a
-              >
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+          <li class="nav-item dropdown dropdown-menu-dark me-lg-2">
+            <a
+              class="nav-link dropdown"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                class="rounded-circle"
+                height="25"
+                alt="Black and White Portrait of a Man"
+                loading="lazy"
+              />
+            </a>
+            <ul class="dropdown-menu" style="z-index: 1000">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="{{ url_for('core_view.get_user_profile', username=current_user.username) }}"
+                  >My profile</a
+                >
+              </li>
+              <li class="mt-0">
+                <a
+                  class="dropdown-item"
+                  href="{{ url_for('accounts_view.user_settings') }}"
+                  >User settings</a
+                >
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="{{ url_for('accounts_view.logout') }}"
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </li>
 
-    <div class="container-fluid">
-      <div
-        class="offcanvas offcanvas-start text-bg-dark"
-        tabindex="-1"
-        id="offcanvasNavbar"
-        aria-labelledby="offcanvasNavbarLabel"
-      >
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-          <button
-            type="button"
-            class="btn-close btn-close-white"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="{{ url_for('accounts_view.home') }}"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item dropdown dropdown-menu-dark">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li>
-                  <a class="dropdown-item" href="#">Another action</a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('accounts_view.logout') }}"
-                >Logout</a
-              >
-            </li>
-            {% endif %}
-          </ul>
-          <form class="d-flex mt-3" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
-          <footer class="position-absolute bottom-0 end-50">None</footer>
+          {% else %}
+          <li class="nav-item me-lg-3">
+            <a
+              class="nav-link active p-0"
+              href="{{ url_for('accounts_view.login') }}"
+              ><button class="btn btn-outline-primary border-0 btn-sm">
+                Login
+              </button></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link p-0"
+              href="{{ url_for('accounts_view.register') }}"
+              ><button class="btn btn-outline-success border-0 btn-sm">
+                Signup
+              </button></a
+            >
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div class="container-fluid">
+        <div
+          class="offcanvas offcanvas-start text-bg-dark"
+          tabindex="-1"
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+        >
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="{{ url_for('accounts_view.home') }}"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item dropdown dropdown-menu-dark">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li>
+                    <a class="dropdown-item" href="#">Another action</a>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </li>
+                </ul>
+              </li>
+              {% if current_user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('accounts_view.logout') }}"
+                  >Logout</a
+                >
+              </li>
+              {% endif %}
+            </ul>
+            <form class="d-flex mt-3" role="search">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-success" type="submit">
+                Search
+              </button>
+            </form>
+            <footer class="position-absolute bottom-0 end-50">None</footer>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- </div> -->
 </nav>

@@ -54,6 +54,21 @@ $(document).ready(function () {
     });
   });
 
+  function searchByTheme(data) {
+    return $.ajax({
+      type: "POST",
+      url: `http://127.0.0.1:5000/api/v1/search_by_theme`,
+      data: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      success: function (data) {
+        for (let id of data) {
+          $(`DIV#${id}`).hide();
+        }
+      },
+    });
+  }
   selectedThemes = [];
 
   $(".theme-btn").on("click", function () {
@@ -68,40 +83,118 @@ $(document).ready(function () {
     if ($(this).hasClass("active")) {
       selectedThemes.push(themeId);
 
-      $.ajax({
-        type: "POST",
-        url: `http://127.0.0.1:5000/api/v1/search_by_theme`,
-        data: `{"themeIds": ${JSON.stringify(
+      searchByTheme(
+        `{"themeIds": ${JSON.stringify(
           selectedThemes
-        )}, "poemIds": ${JSON.stringify(poemIds)}}`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        success: function (data) {
-          for (let id of data) {
-            $(`DIV#${id}`).hide();
-          }
-        },
+        )}, "poemIds": ${JSON.stringify(poemIds)}}`
+      ).done(function (data) {
+        for (let id of data) {
+          $(`DIV#${id}`).hide();
+        }
       });
     } else {
       selectedThemes = selectedThemes.filter((id) => id !== themeId);
 
-      $.ajax({
-        type: "POST",
-        url: `http://127.0.0.1:5000/api/v1/search_by_theme`,
-        data: `{"themeIds": ${JSON.stringify(
+      searchByTheme(
+        `{"themeIds": ${JSON.stringify(
           selectedThemes
-        )}, "poemIds": ${JSON.stringify(poemIds)}}`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        success: function (data) {
-          validPoemIds = poemIds.filter((id) => !data.includes(id));
-          for (let id of validPoemIds) {
-            $(`DIV#${id}`).show();
-          }
-        },
+        )}, "poemIds": ${JSON.stringify(poemIds)}}`
+      ).done(function (data) {
+        validPoemIds = poemIds.filter((id) => !data.includes(id));
+        for (let id of validPoemIds) {
+          $(`DIV#${id}`).show();
+        }
       });
     }
   });
+
+  function checkValidity(url) {
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (data) {
+          if (data.error) reject(data);
+          else resolve(data);
+        },
+        error: function (error) {
+          reject(error);
+        },
+      });
+    });
+  }
+
+  $("INPUT#new-username-input").on("input", function () {
+    newUsername = $(this).val();
+    usernameInput = $(this);
+
+    if (!newUsername || !newUsername.trim()) {
+      usernameInput
+        .removeClass("is-valid was-validated")
+        .addClass("is-invalid");
+    } else {
+      checkValidity(`/api/v1/users/validate/username/${newUsername}`)
+        .then((data) => {
+          usernameInput
+            .removeClass("is-valid was-validated")
+            .addClass("is-invalid");
+        })
+        .catch((error) => {
+          usernameInput
+            .removeClass("is-invalid")
+            .addClass("is-valid was-validated");
+        });
+    }
+  });
+
+  $("INPUT#new-username-input").on("blur", function () {
+    if (!$(this).val()) {
+      $(this).removeClass("is-valid is-invalid");
+    }
+  });
+
+  $("BUTTON.update-username-btn").on("click", function (event) {
+    if (!$("INPUT#new-username-input").hasClass("was-validated")) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  });
+
+  $("INPUT#new-email-input").on("input", function () {
+    newEmail = $(this).val();
+    emailInput = $(this);
+
+    if (!newEmail || !newEmail.trim()) {
+      emailInput.removeClass("is-valid was-validated").addClass("is-invalid");
+    } else {
+      checkValidity(`/api/v1/users/validate/email/${newEmail}`)
+        .then((data) => {
+          emailInput
+            .removeClass("is-valid was-validated")
+            .addClass("is-invalid");
+        })
+        .catch((error) => {
+          emailInput
+            .removeClass("is-invalid")
+            .addClass("is-valid was-validated");
+        });
+    }
+  });
+
+  $("INPUT#new-email-input").on("blur", function () {
+    if (!$(this).val()) {
+      $(this).removeClass("is-valid is-invalid");
+    }
+  });
+
+  $("BUTTON.update-email-btn").on("click", function (event) {
+    if (!$("INPUT#new-email-input").hasClass("was-validated")) {
+      event.preventDefault();
+      event.stopPropagation();
+    } else {
+      $("INPUT#current-email").val($("INPUT#new-email-input").val());
+    }
+  });
 });
+
+

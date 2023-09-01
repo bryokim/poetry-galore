@@ -1,10 +1,20 @@
-from flask import abort, jsonify, make_response, request, url_for
+from flask import (
+    abort,
+    flash,
+    jsonify,
+    make_response,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from flask_login import current_user, fresh_login_required, login_required
 
 from app import bcrypt
 from app.views import core_view
 from app.models.user import User
 from app.models.engine.db_storage import DBStorage
+from app.forms.update_details import UpdateUserForm
 
 
 @core_view.route("/users")
@@ -32,6 +42,48 @@ def get_users():
         ]
 
     return make_response(jsonify(users_dictionaries))
+
+
+@core_view.route("/users/<username>")
+def get_user_profile(username):
+    user = DBStorage().get_by_attribute(User, username=username)
+
+    if not user:
+        return redirect(url_for("accounts_view.home"))
+
+    response = make_response(
+        render_template(
+            "accounts/profile.html",
+            user=user,
+        )
+    )
+
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    response.headers["Cache-Control"] = "public, max-age=0"
+
+    return response
+
+
+@core_view.route("/users/validate/username/<username>")
+def validate_username(username):
+    user = DBStorage().get_by_attribute(User, username=username)
+
+    if not user:
+        return make_response(jsonify({"error": "Invalid username"}))
+    else:
+        return make_response(jsonify({"success": "Username found"}))
+
+
+@core_view.route("/users/validate/email/<email>")
+def validate_email(email):
+    user = DBStorage().get_by_attribute(User, email=email)
+
+    if not user:
+        return make_response(jsonify({"error": "Invalid email"}))
+    else:
+        return make_response(jsonify({"success": "Email found"}))
 
 
 @core_view.route("/users/<user_id>")
@@ -82,7 +134,7 @@ def create_user():
     return make_response(jsonify(new_user.to_dict()), 201)
 
 
-@core_view.route("/users/<user_id>", methods=["UPDATE"])
+@core_view.route("/users/<user_id>/update", methods=["POST"])
 @fresh_login_required
 def update_user(user_id: str):
     """Update a user.
@@ -93,26 +145,27 @@ def update_user(user_id: str):
     Returns:
         dict: Newly updated user.
     """
-    data = request.get_json(silent=True)
-    user = DBStorage().get(User, user_id)
 
-    if not user:
-        abort(404)
+    current_user.username = (
+        request.form.get("username") or current_user.username
+    )
+    current_user.email = request.form.get("email") or current_user.email
 
-    if not data:
-        abort(400, description="Invalid JSON")
+    print(current_user.password)
+    if request.form.get("password") and request.form.get("current-password"):
+        if bcrypt.check_password_hash(
+            current_user.password, request.form.get("current-password")
+        ):
+            current_user.password = bcrypt.generate_password_hash(
+                request.form.get("password")
+            )
+        else:
+            flash("Invalid password", "danger")
 
-    ignore_keys = ["id", "created_at", "updated_at"]
-    for key, value in data.items():
-        if key not in ignore_keys:
-            if key == "password":
-                value = bcrypt.generate_password_hash(key)
-            setattr(user, key, value)
-
-    DBStorage().new(user)
+    DBStorage().new(current_user)
     DBStorage().save()
 
-    return make_response(jsonify(user.to_dict()), 200)
+    return redirect(url_for("accounts_view.user_settings"))
 
 
 @core_view.route("/users/<user_id>", methods=["DELETE"])

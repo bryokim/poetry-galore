@@ -17,7 +17,6 @@ from app.models.comment import Comment
 from app.models.poem import Poem
 from app.models.user import User
 from app.models.engine.db_storage import DBStorage
-from app.forms.comment import CommentForm
 
 
 @core_view.route("/comments")

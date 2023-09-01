@@ -1,0 +1,139 @@
+{% extends "_base.html" %}{% block content %}
+<div class="row">
+  <div class="col-2"></div>
+  <div
+    class="col-8 d-flex flex-column align-content-center justify-content-center"
+  >
+    <form
+      class="row g-3 mb-5 needs-validation"
+      role="form"
+      method="post"
+      action="{{ url_for('core_view.update_user', user_id=current_user.id)}}"
+      autocomplete="off"
+    >
+      <div class="col-4 mb-1 form-floating">
+        <input
+          type="text"
+          class="form-control-plaintext"
+          id="current-username"
+          readonly
+          value="{{ current_user.username }}"
+        />
+        <label for="current-username">Current username</label>
+      </div>
+
+      <div class="col-4 mb-2">
+        <label for="new-username-input" class="form-label mb-1"
+          >New username</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="new-username-input"
+          placeholder="Brian Kim"
+          name="username"
+          required
+        />
+      </div>
+
+      <div class="col-4 position-relative">
+        <button
+          type="submit"
+          class="btn btn-primary btn-sm mb-2 position-absolute bottom-0 update-username-btn"
+          formaction="{{ url_for('core_view.update_user', user_id=current_user.id) }}"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+
+    <form
+      class="row g-3 mb-5 needs-validation"
+      role="form"
+      method="post"
+      action="{{ url_for('core_view.update_user', user_id=current_user.id)}}"
+    >
+      <div class="col-4 mb-1 form-floating">
+        <input
+          type="email"
+          class="form-control-plaintext"
+          id="current-email"
+          readonly
+          value="{{ current_user.email}}"
+        />
+        <label for="current-email">Current email</label>
+      </div>
+
+      <div class="col-4 mb-2">
+        <label for="new-email-input" class="form-label">New email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="new-email-input"
+          placeholder="example@email.com"
+          name="email"
+          required
+        />
+      </div>
+
+      <div class="col-4 position-relative">
+        <button
+          type="submit"
+          class="btn btn-primary btn-sm mb-2 position-absolute bottom-0 update-email-btn"
+          formaction="{{ url_for('core_view.update_user', user_id=current_user.id) }}"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+
+    <form
+      class="row g-3 mb-5 needs-validation"
+      role="form"
+      method="post"
+      action="{{ url_for('core_view.update_user', user_id=current_user.id)}}"
+    >
+      <div class="col-4 mb-1">
+          <label for="current-password" class="form-label">Current password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="current-password"
+          name="current-password"
+        />
+        <span
+        toggle="#current-password"
+        class="fa fa-fw fa-eye toggle-password password-update"
+      ></span>
+      </div>
+
+      <div class="col-4 mb-2">
+        <label for="new-password-input" class="form-label">New password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="new-password-input"
+          name="password"
+          required
+        />
+        <span
+        toggle="#new-password-input"
+        class="fa fa-fw fa-eye toggle-password password-update"
+      ></span>
+      </div>
+
+      <div class="col-4 position-relative">
+        <button
+          type="submit"
+          class="btn btn-primary btn-sm mb-2 position-absolute update-password-btn"
+          style="bottom: 15px;"
+          formaction="{{ url_for('core_view.update_user', user_id=current_user.id) }}"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="col-2"></div>
+</div>
+{% endblock %}

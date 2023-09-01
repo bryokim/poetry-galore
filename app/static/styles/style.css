@@ -6,6 +6,14 @@
   z-index: 2;
 }
 
+.password-update {
+  float: right;
+  right: 10px;
+  bottom: 25px;
+  position: relative;
+  z-index: 2;
+}
+
 .update-comment {
   display: none;
   cursor: pointer;
@@ -43,4 +51,15 @@
   border: 1px solid green;
   padding: 2px;
   color: green;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+}
+
+@media (min-width: 576px) {
+  .logo {
+    width: 200px;
+  }
 }

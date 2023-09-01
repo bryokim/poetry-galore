@@ -1,10 +1,10 @@
 from flask import Blueprint, make_response, jsonify
 
-from .account import *
-from .core import *
-
 accounts_view = Blueprint("accounts_view", __name__)
 core_view = Blueprint("core_view", __name__, url_prefix="/api/v1")
+
+from .account import *
+from .core import *
 
 
 @core_view.errorhandler(404)

@@ -1,17 +1,21 @@
 {% extends "_base.html" %} {% block content %}
-
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
 <div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-4">
-    <main class="form-signin w-100 m-auto">
-      <form role="form" method="post" action="">
+  <div class="col-sm-3 col-xl-4"></div>
+  <div
+    class="col-sm-6 col-xl-4 d-flex align-content-center justify-content-center"
+    style="height: 60vh;"
+  >
+    <main class="form-signin w-100 m-auto p-4 bg-body-tertiary border border-1 border-subtle-light border-opacity-50"
+    style="border-radius: 6px;">
+      <form role="form" method="post" action="" autocomplete="off">
         {{ form.csrf_token }}
-        <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
+        <h1 class="h3 mb-3 fw-normal text-center">Sign in</h1>
 
         <div class="form-floating">
-          {{ form.username(placeholder="username", class="form-control mb-2") }} {{
-          form.username.label }} {% if form.username.errors %} {% for error in
-          form.username.errors %}
+          {{ form.username(placeholder="username", class="form-control mb-2") }}
+          {{ form.username.label }} {% if form.username.errors %} {% for error
+          in form.username.errors %}
           <div class="alert alert-danger">{{ error }}</div>
           {% endfor %} {% endif %}
         </div>
@@ -29,21 +33,23 @@
         </div>
 
         <div class="form-check d-flex justify-content-center mb-3">
-            {{ form.remember_me(class="form-check-input me-2", default="unchecked") }}
-            {{ form.remember_me.label }}
+          {{ form.remember_me(class="form-check-input me-2",
+          default="unchecked") }} {{ form.remember_me.label }}
         </div>
 
-        <button class="w-50 btn btn-lg btn-primary offset-3" type="submit">
+        <button class="w-50 btn btn-lg btn-primary offset-3 rounded-pill" type="submit">
           Sign in
         </button>
         <p class="text-center mt-3">
           New user?
           <a href="{{ url_for('accounts_view.register') }}">Register now</a>
         </p>
+
+        <!-- <a href="{{ url_for('accounts_view.login_by_google') }}">Login by Google</a> -->
       </form>
     </main>
   </div>
-  <div class="col-md-4"></div>
+  <div class="col-sm-3 col-xl-4"></div>
 </div>
 
 {% endblock %}

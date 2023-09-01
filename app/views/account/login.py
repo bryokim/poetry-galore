@@ -57,7 +57,7 @@ def login():
 
             return redirect(url_for("accounts_view.home"))
         else:
-            flash("Invalid email/password", "danger")
+            flash("Invalid username/password", "danger")
             return render_template("accounts/login.html", form=form)
 
     return render_template("accounts/login.html", form=form)

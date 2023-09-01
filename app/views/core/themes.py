@@ -58,7 +58,7 @@ def get_poems_with_theme(theme_id):
 
 
 @core_view.route("/themes", methods=["POST"])
-@login_required
+# @login_required
 def create_theme():
     """Create a new theme.
 
@@ -86,7 +86,7 @@ def create_theme():
 
 
 @core_view.route("/poems/<poem_id>/themes/<theme_id>", methods=["POST"])
-@login_required
+# @login_required
 def add_poem_theme(poem_id, theme_id):
     """Add a theme to a given poem.
 

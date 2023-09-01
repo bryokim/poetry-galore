@@ -85,30 +85,6 @@ def create_poem():
         DBStorage().save()
 
         return redirect(url_for("core_view.get_poem", poem_id=new_poem.id))
-    # data = request.get_json(silent=True)
-
-    # if not data:
-    #     abort(400, description="Invalid JSON")
-
-    # if not data.get("title"):
-    #     abort(400, description="Poem must have title")
-
-    # if not data.get("body"):
-    #     abort(400, description="Poem must have body")
-
-    # if not data.get("user_id"):
-    #     abort(400, description="Poem must have user_id")
-
-    # user = DBStorage().get(User, data.get("user_id"))
-    # if not user:
-    #     abort(400, description="Invalid user_id")
-
-    # new_poem = Poem(**data)
-
-    # DBStorage().new(new_poem)
-    # DBStorage().save()
-
-    # return make_response(jsonify(new_poem.to_dict()), 201)
 
     return render_template("accounts/post_poem.html", form=form)
 
@@ -144,8 +120,8 @@ def update_poem(poem_id: str):
     return make_response(jsonify(poem.to_dict()), 200)
 
 
-@core_view.route("/poems/<poem_id>", methods=["DELETE"])
-@fresh_login_required
+@core_view.route("/poems/<poem_id>/delete")
+@login_required
 def delete_poem(poem_id):
     """Delete a poem.
 
@@ -157,10 +133,10 @@ def delete_poem(poem_id):
     """
     poem = DBStorage().get(Poem, poem_id)
 
-    if not poem:
-        abort(404)
+    # if not poem:
+    #     abort(404)
 
     DBStorage().delete(poem)
     DBStorage().save()
 
-    return make_response(jsonify({}), 200)
+    return redirect(url_for("accounts_view.home"))

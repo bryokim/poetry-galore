@@ -5,62 +5,62 @@ For the love of poetry.
 ## Project structure
 
 * [app](./app)
-    * [__init__.py](./app/__init__.py)
-    * [forms](./app/forms)
-        * [__init__.py](./app/forms/__init__.py)
-        * [post_poem.py](./app/forms/post_poem.py)
-        * [login.py](./app/forms/login.py)
-        * [register.py](./app/forms/register.py)
-    * [models](./app/models)
-        * [engine](./app/models/engine)
-            * [__init__.py](./app/models/engine/__init__.py)
-            * [db_storage.py](./app/models/engine/db_storage.py)
-        * [__init__.py](./app/models/__init__.py)
-        * [category.py](./app/models/category.py)
-        * [comment.py](./app/models/comment.py)
-        * [poem.py](./app/models/poem.py)
-        * [theme.py](./app/models/theme.py)
-        * [base_model.py](./app/models/base_model.py)
-        * [user.py](./app/models/user.py)
-    * [templates](./app/templates)
-        * [core](./app/templates/core)
-            * [poem.html](./app/templates/core/poem.html)
-        * [accounts](./app/templates/accounts)
-            * [register.html](./app/templates/accounts/register.html)
-            * [home.html](./app/templates/accounts/home.html)
-            * [post_poem.html](./app/templates/accounts/post_poem.html)
-            * [profile.html](./app/templates/accounts/profile.html)
-            * [login.html](./app/templates/accounts/login.html)
-        * [navigation.html](./app/templates/navigation.html)
-        * [_base.html](./app/templates/_base.html)
-    * [utils](./app/utils)
-        * [decorators.py](./app/utils/decorators.py)
-    * [views](./app/views)
-        * [__init__.py](./app/views/__init__.py)
-        * [core](./app/views/core)
-            * [__init__.py](./app/views/core/__init__.py)
-            * [categories.py](./app/views/core/categories.py)
-            * [comments.py](./app/views/core/comments.py)
-            * [poems_likes.py](./app/views/core/poems_likes.py)
-            * [themes.py](./app/views/core/themes.py)
-            * [poems.py](./app/views/core/poems.py)
-            * [users.py](./app/views/core/users.py)
-        * [account](./app/views/account)
-            * [__init__.py](./app/views/account/__init__.py)
-            * [home.py](./app/views/account/home.py)
-            * [register.py](./app/views/account/register.py)
-            * [login.py](./app/views/account/login.py)
-    * [static](./app/static)
-        * [scripts](./app/static/scripts)
-            * [bootstrap.bundle.min.js](./app/static/scripts/bootstrap.bundle.min.js)
-            * [bootstrap.bundle.min.js.map](./app/static/scripts/bootstrap.bundle.min.js.map)
-            * [script.js](./app/static/scripts/script.js)
-        * [styles](./app/static/styles)
-            * [bootstrap.min.css](./app/static/styles/bootstrap.min.css)
-            * [bootstrap.min.css.map](./app/static/styles/bootstrap.min.css.map)
-            * [style.css](./app/static/styles/style.css)
-        * [images](./app/static/images)
-            * [logo-no-background.svg](./app/static/images/logo-no-background.svg)
+  * [__init__.py](./app/__init__.py)
+  * [forms](./app/forms)
+    * [__init__.py](./app/forms/__init__.py)
+    * [post_poem.py](./app/forms/post_poem.py)
+    * [login.py](./app/forms/login.py)
+    * [register.py](./app/forms/register.py)
+  * [models](./app/models)
+    * [engine](./app/models/engine)
+      * [__init__.py](./app/models/engine/__init__.py)
+      * [db_storage.py](./app/models/engine/db_storage.py)
+    * [__init__.py](./app/models/__init__.py)
+    * [category.py](./app/models/category.py)
+    * [comment.py](./app/models/comment.py)
+    * [poem.py](./app/models/poem.py)
+    * [theme.py](./app/models/theme.py)
+    * [base_model.py](./app/models/base_model.py)
+    * [user.py](./app/models/user.py)
+  * [templates](./app/templates)
+    * [core](./app/templates/core)
+      * [poem.html](./app/templates/core/poem.html)
+    * [accounts](./app/templates/accounts)
+      * [register.html](./app/templates/accounts/register.html)
+      * [home.html](./app/templates/accounts/home.html)
+      * [post_poem.html](./app/templates/accounts/post_poem.html)
+      * [profile.html](./app/templates/accounts/profile.html)
+      * [login.html](./app/templates/accounts/login.html)
+    * [navigation.html](./app/templates/navigation.html)
+    * [_base.html](./app/templates/_base.html)
+  * [utils](./app/utils)
+    * [decorators.py](./app/utils/decorators.py)
+  * [views](./app/views)
+    * [__init__.py](./app/views/__init__.py)
+    * [core](./app/views/core)
+      * [__init__.py](./app/views/core/__init__.py)
+      * [categories.py](./app/views/core/categories.py)
+      * [comments.py](./app/views/core/comments.py)
+      * [poems_likes.py](./app/views/core/poems_likes.py)
+      * [themes.py](./app/views/core/themes.py)
+      * [poems.py](./app/views/core/poems.py)
+      * [users.py](./app/views/core/users.py)
+    * [account](./app/views/account)
+      * [__init__.py](./app/views/account/__init__.py)
+      * [home.py](./app/views/account/home.py)
+      * [register.py](./app/views/account/register.py)
+      * [login.py](./app/views/account/login.py)
+  * [static](./app/static)
+    * [scripts](./app/static/scripts)
+      * [bootstrap.bundle.min.js](./app/static/scripts/bootstrap.bundle.min.js)
+      * [bootstrap.bundle.min.js.map](./app/static/scripts/bootstrap.bundle.min.js.map)
+      * [script.js](./app/static/scripts/script.js)
+    * [styles](./app/static/styles)
+      * [bootstrap.min.css](./app/static/styles/bootstrap.min.css)
+      * [bootstrap.min.css.map](./app/static/styles/bootstrap.min.css.map)
+      * [style.css](./app/static/styles/style.css)
+    * [images](./app/static/images)
+      * [logo-no-background.svg](./app/static/images/logo-no-background.svg)
 * [LICENSE](./LICENSE)
 * [README.md](./README.md)
 * [console.py](./console.py)
@@ -70,7 +70,7 @@ For the love of poetry.
 
 ## Starting up the application
 
-To run the application, you first need to clone this repository.
+To run the application, you first need to clone this [repository](<https://github.com/bryokim/poetry-galore>) and run `cd poetry-galore`.
 
 Next you need to install all the requirements required to run the application.
 
@@ -80,7 +80,7 @@ $ pip install -r requirements.txt
 ```
 
 You also need to have a MySQL installation in order for the application to be able
-to read and write data to the database. You can follow this tutorial to install and set up
+to read and write data to the database. You can follow this [tutorial](.) to install and set up
 your MySQL.
 
 You'll need to set the following environment variables that are required by the application.
@@ -91,6 +91,19 @@ SECRET_KEY -> Sets the secret key.
 SECURITY_PASSWORD_SALT -> Sets the salt used for password encryption.
 FLASK_APP -> Name of the flask application to run. In this case it's "app".
 DATABASE_URL -> The MySQL database to connect to.
+```
+
+Next initialize and upgrade the database.
+
+```Bash
+kim@eternity ~/poetry-galore
+$ flask db init
+
+kim@eternity ~/poetry-galore
+$ flask db migrate
+
+kim@eternity ~/poetry-galore
+$ flask db upgrade
 ```
 
 After setting the environment variables, you can start the app.
