@@ -1,12 +1,72 @@
 {% extends "_base.html" %} {% block content %}
+<div
+  class="modal fade"
+  id="deleteConfirmation"
+  tabindex="-1"
+  aria-labelledby="deleteConfirmationLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0 pb-0">
+        <h1 class="modal-title fs-5" id="deleteConfirmationLabel">
+          Delete {{ poem.title}}
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body border-bottom-0">
+        Are you sure you want to delete this poem?
+      </div>
+      <div class="modal-footer border-top-0">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          data-bs-dismiss="modal"
+        >
+          No
+        </button>
+
+        <a href="{{ url_for('core_view.delete_poem', poem_id=poem.id) }}"
+          ><button class="btn btn-outline-danger">Yes</button></a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row">
-  <div class="col-md-1"></div>
+  <div
+    class="col-md-1 d-none d-md-flex flex-md-column align-items-center border-primary rounded"
+    style="height: fit-content"
+  >
+    {% if current_user == poem.user %}
+    <a href="{{ url_for('core_view.update_poem', poem_id=poem.id) }}"
+      ><button class="btn btn-outline-light mt-3 border-0">Edit</button></a
+    >
+
+    <a class="mt-3 mb-3" id="delete-poem-btn">
+      <button
+        type="button"
+        class="btn btn-outline-danger border-0"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteConfirmation"
+      >
+        Delete
+      </button></a
+    >
+    {% endif %}
+  </div>
   <div class="col-md-6">
-    <div class="card text-center text-bg-dark border-secondary">
-      <div class="card-body">
+    <div class="card text-center text-bg-dark border-0">
+      <div class="card-body pb-0">
         <h3 class="card-title text-info">{{ poem.title }}</h3>
         <p class="card-text" style="white-space: pre-wrap">{{ poem.body }}</p>
-        <footer class="blockquote-footer text-end mb-0">
+        <footer class="blockquote-footer text-end mb-0 mt-3">
           <a
             href="{{ url_for('core_view.get_user_profile', username=poem.user.username) }}"
             class="text-white link-underline link-underline-info link-underline-opacity-25 link-underline-opacity-100-hover link-offset-2"
@@ -14,20 +74,45 @@
             <i>{{ poem.user.username }}</i>
           </a>
         </footer>
+        <div class="row mt-5 bg-body">
+          <div class="col-12 text-start">
+            <ul class="list-inline">
+              {% for theme in poem.themes %}
+              <li class="list-inline-item">
+                <a
+                  class="text-info link-underline-primary link-underline-opacity-10 link-underline-opacity-100-hover link-offset-2"
+                  href="{{ url_for('core_view.get_poems_with_theme', theme_id=theme.id)}}"
+                  >#{{ theme.name }}</a
+                >
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <!-- <div class="col-6">
+            {% for category in poem.category %} {{ category.name }} {% endfor %}
+          </div> -->
+        </div>
       </div>
     </div>
+  </div>
+  <div class="col-7 d-md-none"></div>
+  <div class="col-5 d-md-none border-primary rounded bg-body-secondary">
     {% if current_user == poem.user %}
-    <a
-      href="{{ url_for('core_view.delete_poem', poem_id=poem.id) }}"
-      class="btn btn-outline-danger mt-3"
-      >Delete</a
+    <a class="float-end mt-2 mb-2">
+      <button
+        type="button"
+        class="btn btn-outline-danger border-0"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteConfirmation"
+      >
+        Delete
+      </button></a
     >
-
-    <!-- <a
+    <a
       href="{{ url_for('core_view.update_poem', poem_id=poem.id) }}"
-      class="btn btn-outline-danger mt-3"
-      >Delete</a
-    > -->
+      class="float-end mt-2 mb-2"
+      ><button class="btn btn-outline-light border-0">Edit</button></a
+    >
     {% endif %}
   </div>
   <div class="col-md-5 mt-5 mt-md-0">
@@ -56,15 +141,15 @@
             </p>
             {% if current_user == comment.user %}
             <a
-              class="delete-comment link-danger link-offset-2 link-underline-opacity-10  link-underline-opacity-75-hover position-absolute top-0 end-0"
+              class="delete-comment link-danger link-offset-2 link-underline-opacity-10 link-underline-opacity-75-hover position-absolute top-0 end-0"
               href="{{ url_for('core_view.delete_comment', comment_id=comment.id, poem_id=poem.id) }}"
               >Delete</a
             >
             <a
               class="update-comment link-offset-2 link-light link-underline-opacity-10 link-underline-opacity-75-hover position-absolute top-0"
-              style="right: 60px;"
+              style="right: 60px"
               data-comment-id="{{ comment.id }}"
-              data-poem-id = "{{ comment.poem_id }}"
+              data-poem-id="{{ comment.poem_id }}"
               >Edit</a
             >
             {% endif %}
@@ -80,11 +165,11 @@
           method="post"
         >
           <input
-          type="text"
-          class="form-control me-3"
-          placeholder="Comment"
-          name="comment"
-          >
+            type="text"
+            class="form-control me-3"
+            placeholder="Comment"
+            name="comment"
+          />
           <button
             class="btn btn-outline-success btn-sm comment-btn h-auto"
             data-id="{{ poem.id }}"
@@ -98,7 +183,13 @@
     </div>
     <div class="text-center mt-3">
       {% if not current_user.is_authenticated %}
-        <p><a href="{{ url_for('accounts_view.login', next='/api/v1/poems/{}'.format(poem.id)) }}">Login</a> to comment</p>
+      <p>
+        <a
+          href="{{ url_for('accounts_view.login', next='/api/v1/poems/{}'.format(poem.id)) }}"
+          >Login</a
+        >
+        to comment
+      </p>
       {% endif %}
     </div>
   </div>

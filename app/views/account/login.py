@@ -47,11 +47,7 @@ def login():
             else:
                 login_user(user)
 
-            if "next" in session:
-                next_url = session["next"]
-                del session["next"]
-                return redirect(next_url)
-            elif "next" in request.args:
+            if "next" in request.args:
                 next_url = request.args["next"]
                 return redirect(next_url)
 

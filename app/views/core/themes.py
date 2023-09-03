@@ -1,7 +1,15 @@
-from flask import abort, jsonify, make_response, request, url_for
+from flask import (
+    abort,
+    jsonify,
+    make_response,
+    render_template,
+    request,
+    url_for,
+)
 from flask_login import current_user, login_required
 
 from app.views import core_view
+from app.models.category import Category
 from app.models.theme import Theme
 from app.models.poem import Poem
 from app.models.engine.db_storage import DBStorage
@@ -51,10 +59,15 @@ def get_poems_with_theme(theme_id):
     """
     theme = DBStorage().get(Theme, theme_id)
 
-    if not theme:
-        abort(404)
+    # if not theme:
+    #     abort(404)
 
-    return make_response(jsonify([poem.to_dict() for poem in theme.poems]))
+    return render_template(
+        "accounts/home.html",
+        poems=theme.poems,
+        themes=DBStorage().all(Theme).values(),
+        categories=DBStorage().all(Category).values()
+    )
 
 
 @core_view.route("/themes", methods=["POST"])
@@ -113,7 +126,7 @@ def add_poem_theme(poem_id, theme_id):
 
 
 @core_view.route("/poems/<poem_id>/themes/<theme_id>", methods=["DELETE"])
-@login_required
+# @login_required
 def remove_poem_theme(poem_id, theme_id):
     """Removes a theme from a poem.
 

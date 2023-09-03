@@ -86,9 +86,16 @@ def like_poem(poem_id):
         poem.likes.append(current_user)
         DBStorage().new(poem)
         DBStorage().save()
-        return make_response(jsonify(current_user.to_dict()), 201)
-    elif current_user in poem.likes:
-        return make_response(jsonify(current_user.to_dict()), 200)
+
+    num = len(
+        db.session.execute(
+            text("SELECT * FROM likes WHERE poem_id=:poem_id").bindparams(
+                poem_id=poem_id
+            )
+        ).all()
+    )
+
+    return make_response(jsonify({"likes": num}), 200)
 
 
 @core_view.route("/poems/<poem_id>/unlike")
@@ -111,4 +118,12 @@ def unlike_poem(poem_id):
         DBStorage().new(poem)
         DBStorage().save()
 
-    return make_response(jsonify({}), 200)
+    num = len(
+        db.session.execute(
+            text("SELECT * FROM likes WHERE poem_id=:poem_id").bindparams(
+                poem_id=poem_id
+            )
+        ).all()
+    )
+
+    return make_response(jsonify({"likes": num}), 200)

@@ -5,7 +5,7 @@
     <main class="form-signin w-100 m-auto">
       <form role="form" method="post" action="">
         {{ form.csrf_token }}
-        <h1 class="h3 mb-3 fw-normal text-center">Be creative</h1>
+        <h1 class="h3 mb-3 fw-normal text-center">Update</h1>
 
         <div class="first-page">
           <div class="form-floating">
@@ -61,8 +61,9 @@
 
           <div class="col-8 mb-2">
             {{ form.category.label(class="form-label")}} {{
-            form.category(placeholder="category", class="form-select")}} {% if
-            form.category.errors %} {% for error in form.category.errors %}
+            form.category(placeholder="category", class="form-select",
+            data_selected=category_name) }} {% if form.category.errors
+            %} {% for error in form.category.errors %}
             <div class="form-text text-danger text-center">{{ error }}</div>
             {% endfor %} {% endif %}
           </div>
@@ -93,7 +94,7 @@
               id="post-btn"
               type="submit"
             >
-              Post
+              Update
             </button>
           </div>
           <div class="col-4"></div>

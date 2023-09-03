@@ -3,7 +3,7 @@
 import os
 
 from decouple import config
-from flask import Flask
+from flask import Flask, current_app, session
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from flask_login import LoginManager
@@ -46,8 +46,6 @@ def create_app():
             r"*": {"origins": ["http://127.0.0.1", "http://localhost"]}
         },
     )
-    # with app.before_request():
-    #     app.config["storage"] = DBStorage(db)
 
     from app.models.user import User
 

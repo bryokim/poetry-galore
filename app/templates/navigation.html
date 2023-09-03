@@ -72,14 +72,14 @@
               <li>
                 <a
                   class="dropdown-item"
-                  href="{{ url_for('core_view.get_user_profile', username=current_user.username) }}"
+                  href="{{ url_for('core_view.get_user', user_id=current_user.id) }}"
                   >My profile</a
                 >
               </li>
               <li class="mt-0">
                 <a
                   class="dropdown-item"
-                  href="{{ url_for('accounts_view.user_settings') }}"
+                  href="{{ url_for('core_view.update_user') }}"
                   >User settings</a
                 >
               </li>

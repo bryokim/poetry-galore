@@ -1,8 +1,8 @@
 $(document).ready(function () {
-  $("TEXTAREA").on("input", function () {
-    this.style.height = "auto";
-    this.style.height = this.scrollHeight + "px";
-  });
+  // $("TEXTAREA").on("input", function () {
+  //   this.style.height = "auto";
+  //   this.style.height = this.scrollHeight + "px";
+  // });
 
   $(".toggle-password").click(function () {
     $(this).toggleClass("fa-eye fa-eye-slash");
@@ -195,6 +195,30 @@ $(document).ready(function () {
       $("INPUT#current-email").val($("INPUT#new-email-input").val());
     }
   });
+
+  $("BUTTON.like-button").on("click", function (event) {
+    poemId = $(this).attr("data-id");
+    likeIcon = $(`#${poemId}-like`);
+    likeCount = $(`SPAN#${poemId}-like-count`);
+
+    likeIcon.toggleClass("fa-regular fa-solid");
+
+    if (likeIcon.hasClass("fa-solid")) {
+      $.get(`/api/v1/poems/${poemId}/like`, function (data) {
+        console.log(data);
+        likeCount.html(data.likes);
+      }).done(function () {
+        likeIcon.css("color", "#f20202");
+      });
+    } else {
+      likeIcon.css("color", "");
+      $.get(`/api/v1/poems/${poemId}/unlike`, function (data) {
+        likeCount.html(data.likes);
+      });
+    }
+  });
+
+  // $("BUTTON.comment-button").on("click", function() {
+  //   $.get()
+  // })
 });
-
-

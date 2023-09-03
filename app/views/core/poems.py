@@ -10,7 +10,9 @@ from flask import (
 from flask_login import current_user, fresh_login_required, login_required
 
 from app.views import core_view
+from app.models.category import Category
 from app.models.poem import Poem
+from app.models.theme import Theme
 from app.models.user import User
 from app.models.engine.db_storage import DBStorage
 from app.forms.post_poem import PostPoemForm
@@ -63,6 +65,39 @@ def get_poem(poem_id):
     return render_template("core/poem.html", poem=poem)
 
 
+def create_themes(themes_str):
+    if not themes_str:
+        return []
+
+    theme_names = list(map(lambda x: x.strip().title(), themes_str.split(",")))
+
+    theme_objs = []
+    for name in theme_names:
+        theme = DBStorage().get_by_attribute(Theme, name=name)
+
+        if not theme:
+            theme = Theme(name=name)
+            DBStorage().new(theme)
+
+        theme_objs.append(theme)
+
+    DBStorage().save()
+
+    return theme_objs
+
+
+def create_category(category_name):
+    name = category_name.strip().title()
+
+    category = DBStorage().get_by_attribute(Category, name=name)
+    if not category:
+        category = Category(name=name)
+        DBStorage().new(category)
+        DBStorage().save()
+
+    return [category]
+
+
 @core_view.route("/poems/create", methods=["GET", "POST"])
 @login_required
 def create_poem():
@@ -73,23 +108,36 @@ def create_poem():
     """
 
     form = PostPoemForm(request.form)
+    form.category.choices = [
+        category.name for category in DBStorage().all(Category).values()
+    ]
 
     if form.validate_on_submit():
+        themes = create_themes(form.themes.data)
+        category = create_category(form.category.data)
+
         new_poem = Poem(
             title=form.title.data,
             body=form.poem_body.data,
             user_id=current_user.id,
         )
 
+        new_poem.themes = themes
+        new_poem.category = category
+
         DBStorage().new(new_poem)
         DBStorage().save()
 
         return redirect(url_for("core_view.get_poem", poem_id=new_poem.id))
 
-    return render_template("accounts/post_poem.html", form=form)
+    return render_template(
+        "accounts/post_poem.html",
+        form=form,
+        themes=list(DBStorage().all(Theme).values())[:12],
+    )
 
 
-@core_view.route("/poems/<poem_id>", methods=["UPDATE"])
+@core_view.route("/poems/<poem_id>/update", methods=["GET", "POST"])
 @login_required
 def update_poem(poem_id: str):
     """Update a poem.
@@ -100,24 +148,45 @@ def update_poem(poem_id: str):
     Returns:
         dict: The updated poem.
     """
-    data = request.get_json(silent=True)
+    form = PostPoemForm(request.form)
+    form.category.choices = [
+        category.name for category in DBStorage().all(Category).values()
+    ]
+
     poem = DBStorage().get(Poem, poem_id)
 
-    if not poem:
-        abort(404)
+    if request.method == "POST" and form.validate_on_submit():
+        themes = create_themes(form.themes.data)
+        category = create_category(form.category.data)
 
-    if not data:
-        abort(400, description="Invalid JSON")
+        poem.title = form.title.data
+        poem.body = form.poem_body.data
+        poem.themes = themes
+        poem.category = category
 
-    ignore_keys = ["id", "created_at", "updated_at", "user_id"]
-    for key, value in data.items():
-        if key not in ignore_keys:
-            setattr(poem, key, value)
+        DBStorage().new(poem)
+        DBStorage().save()
 
-    DBStorage().new(poem)
-    DBStorage().save()
+        return redirect(url_for("core_view.get_poem", poem_id=poem.id))
+    else:
+        category_name = ""
+        if poem.category:
+            category_name = poem.category[0].name
 
-    return make_response(jsonify(poem.to_dict()), 200)
+        theme_names = ""
+        if poem.themes:
+            theme_names = ", ".join([theme.name for theme in poem.themes])
+
+        form.title.data = poem.title
+        form.poem_body.data = poem.body
+        form.themes.data = theme_names
+
+    return render_template(
+        "accounts/update_poem.html",
+        form=form,
+        category_name=category_name,
+        themes=list(DBStorage().all(Theme).values())[:12],
+    )
 
 
 @core_view.route("/poems/<poem_id>/delete")

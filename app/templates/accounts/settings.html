@@ -8,7 +8,7 @@
       class="row g-3 mb-5 needs-validation"
       role="form"
       method="post"
-      action="{{ url_for('core_view.update_user', user_id=current_user.id)}}"
+      action="{{ url_for('core_view.update_user')}}"
       autocomplete="off"
     >
       <div class="col-4 mb-1 form-floating">
@@ -40,7 +40,7 @@
         <button
           type="submit"
           class="btn btn-primary btn-sm mb-2 position-absolute bottom-0 update-username-btn"
-          formaction="{{ url_for('core_view.update_user', user_id=current_user.id) }}"
+          formaction="{{ url_for('core_view.update_user') }}"
         >
           Save
         </button>
@@ -51,7 +51,7 @@
       class="row g-3 mb-5 needs-validation"
       role="form"
       method="post"
-      action="{{ url_for('core_view.update_user', user_id=current_user.id)}}"
+      action="{{ url_for('core_view.update_user')}}"
     >
       <div class="col-4 mb-1 form-floating">
         <input
@@ -80,7 +80,7 @@
         <button
           type="submit"
           class="btn btn-primary btn-sm mb-2 position-absolute bottom-0 update-email-btn"
-          formaction="{{ url_for('core_view.update_user', user_id=current_user.id) }}"
+          formaction="{{ url_for('core_view.update_user') }}"
         >
           Save
         </button>
@@ -91,7 +91,7 @@
       class="row g-3 mb-5 needs-validation"
       role="form"
       method="post"
-      action="{{ url_for('core_view.update_user', user_id=current_user.id)}}"
+      action="{{ url_for('core_view.update_user')}}"
     >
       <div class="col-4 mb-1">
           <label for="current-password" class="form-label">Current password</label>
@@ -127,7 +127,7 @@
           type="submit"
           class="btn btn-primary btn-sm mb-2 position-absolute update-password-btn"
           style="bottom: 15px;"
-          formaction="{{ url_for('core_view.update_user', user_id=current_user.id) }}"
+          formaction="{{ url_for('core_view.update_user') }}"
         >
           Save
         </button>

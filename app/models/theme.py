@@ -8,6 +8,6 @@ from app.models.poem import poem_theme
 class Theme(BaseModel, db.Model):
     __tablename__ = "themes"
 
-    name = Column(String(100), nullable=False)
+    name = Column(String(100), nullable=False, unique=True)
 
     poems = db.relationship("Poem", secondary=poem_theme)

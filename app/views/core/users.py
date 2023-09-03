@@ -9,6 +9,7 @@ from flask import (
     url_for,
 )
 from flask_login import current_user, fresh_login_required, login_required
+from uuid import uuid4
 
 from app import bcrypt
 from app.views import core_view
@@ -46,15 +47,16 @@ def get_users():
 
 @core_view.route("/users/<username>")
 def get_user_profile(username):
-    user = DBStorage().get_by_attribute(User, username=username)
+    # user = DBStorage().get_by_attribute(User, username=username)
 
-    if not user:
-        return redirect(url_for("accounts_view.home"))
+    # print(username)
+    # if not user:
+    #     return redirect(url_for("accounts_view.home"))
 
     response = make_response(
         render_template(
             "accounts/profile.html",
-            user=user,
+            user=current_user,
         )
     )
 
@@ -97,12 +99,14 @@ def get_user(user_id: str):
     Returns:
         dict: The requested user.
     """
-    user = DBStorage().get(User, user_id)
+    # user = DBStorage().get(User, user_id)
 
-    if not user:
-        abort(404)
+    # if not user:
+    #     abort(404)
 
-    return make_response(jsonify(user.to_dict(password=False)))
+    return redirect(
+        url_for("core_view.get_user_profile", username=current_user.username)
+    )
 
 
 @core_view.route("/users", methods=["POST"])
@@ -134,9 +138,9 @@ def create_user():
     return make_response(jsonify(new_user.to_dict()), 201)
 
 
-@core_view.route("/users/<user_id>/update", methods=["POST"])
+@core_view.route("/users/update", methods=["GET", "POST"])
 @fresh_login_required
-def update_user(user_id: str):
+def update_user():
     """Update a user.
 
     Args:
@@ -146,26 +150,30 @@ def update_user(user_id: str):
         dict: Newly updated user.
     """
 
-    current_user.username = (
-        request.form.get("username") or current_user.username
-    )
-    current_user.email = request.form.get("email") or current_user.email
+    if request.method == "POST":
+        current_user.username = (
+            request.form.get("username") or current_user.username
+        )
+        current_user.email = request.form.get("email") or current_user.email
 
-    print(current_user.password)
-    if request.form.get("password") and request.form.get("current-password"):
-        if bcrypt.check_password_hash(
-            current_user.password, request.form.get("current-password")
+        if request.form.get("password") and request.form.get(
+            "current-password"
         ):
-            current_user.password = bcrypt.generate_password_hash(
-                request.form.get("password")
-            )
-        else:
-            flash("Invalid password", "danger")
+            if bcrypt.check_password_hash(
+                current_user.password, request.form.get("current-password")
+            ):
+                current_user.password = bcrypt.generate_password_hash(
+                    request.form.get("password")
+                )
+                current_user.alternative_id = str(uuid4())
+                flash("Password changed", "info")
+            else:
+                flash("Invalid password", "danger")
 
-    DBStorage().new(current_user)
-    DBStorage().save()
+        DBStorage().new(current_user)
+        DBStorage().save()
 
-    return redirect(url_for("accounts_view.user_settings"))
+    return render_template("accounts/settings.html")
 
 
 @core_view.route("/users/<user_id>", methods=["DELETE"])
