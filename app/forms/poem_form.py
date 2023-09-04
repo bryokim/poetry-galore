@@ -1,17 +1,19 @@
+"""PoemForm module"""
+
 from flask_wtf import FlaskForm
 from wtforms import (
     StringField,
     TextAreaField,
-    RadioField,
     SelectField,
-    SelectMultipleField,
 )
 from wtforms.validators import DataRequired, Length, InputRequired
 
 from app.models.user import User
 
 
-class PostPoemForm(FlaskForm):
+class PoemForm(FlaskForm):
+    """Form for posting or updating a poem"""
+
     title = StringField(
         "Title", validators=[DataRequired(), Length(min=3, max=30)]
     )

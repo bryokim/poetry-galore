@@ -1,3 +1,5 @@
+"""RegisterForm module"""
+
 from flask_wtf import FlaskForm
 from wtforms import EmailField, PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
@@ -6,6 +8,8 @@ from app.models.user import User
 
 
 class RegisterForm(FlaskForm):
+    """Form for registering new users"""
+
     username = StringField(
         "Username", validators=[DataRequired(), Length(min=1, max=30)]
     )
