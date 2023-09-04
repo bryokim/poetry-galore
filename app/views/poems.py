@@ -15,7 +15,7 @@ from app.models.poem import Poem
 from app.models.theme import Theme
 from app.models.user import User
 from app.models.engine.db_storage import DBStorage
-from app.forms.post_poem import PostPoemForm
+from app.forms.poem_form import PoemForm
 
 
 @core_view.route("/poems")
@@ -107,7 +107,7 @@ def create_poem():
         dict: The newly created poem.
     """
 
-    form = PostPoemForm(request.form)
+    form = PoemForm(request.form)
     form.category.choices = [
         category.name for category in DBStorage().all(Category).values()
     ]
@@ -148,7 +148,7 @@ def update_poem(poem_id: str):
     Returns:
         dict: The updated poem.
     """
-    form = PostPoemForm(request.form)
+    form = PoemForm(request.form)
     form.category.choices = [
         category.name for category in DBStorage().all(Category).values()
     ]

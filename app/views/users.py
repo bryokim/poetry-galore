@@ -15,7 +15,6 @@ from app import bcrypt
 from app.views import core_view
 from app.models.user import User
 from app.models.engine.db_storage import DBStorage
-from app.forms.update_details import UpdateUserForm
 
 
 @core_view.route("/users")

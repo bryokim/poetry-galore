@@ -5,7 +5,6 @@ from flask import (
     request,
     redirect,
     render_template,
-    session,
     url_for,
 )
 from flask_login import login_user
@@ -15,7 +14,7 @@ import requests
 
 from app import bcrypt
 from app.models.user import User
-from app.forms.login import LoginForm
+from app.forms.login_form import LoginForm
 from app.utils.decorators import logout_required
 from app.views import accounts_view
 from app.models.engine.db_storage import DBStorage

@@ -19,7 +19,7 @@ from flask_login import (
 
 from app.models.user import User
 from app.models.engine.db_storage import DBStorage
-from app.forms.register import RegisterForm
+from app.forms.register_form import RegisterForm
 from app.utils.decorators import logout_required
 from app.views import accounts_view
 

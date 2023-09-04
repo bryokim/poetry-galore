@@ -6,7 +6,6 @@ core_view = Blueprint("core_view", __name__, url_prefix="/api/v1")
 from .register import *
 from .login import *
 from .home import *
-from .settings import *
 
 from .users import *
 from .poems import *
