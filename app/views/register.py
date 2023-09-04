@@ -42,7 +42,7 @@ def register():
         #     "accounts.confirm_email", token=token, _external=True
         # )
         # html = render_template(
-        #     "accounts/confirm_email.html", confirm_url=confirm_url
+        #     "confirm_email.html", confirm_url=confirm_url
         # )
         # subject = "Please confirm your email"
         # send_email(user.email, subject, html)
@@ -53,7 +53,7 @@ def register():
         # return redirect(url_for("accounts.inactive"))
         return redirect(url_for("accounts_view.login"))
 
-    return render_template("accounts/register.html", form=form)
+    return render_template("register.html", form=form)
 
 
 @accounts_view.route("/logout")

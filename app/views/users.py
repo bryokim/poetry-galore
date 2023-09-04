@@ -55,7 +55,7 @@ def get_user_profile(username):
 
     response = make_response(
         render_template(
-            "accounts/profile.html",
+            "profile.html",
             user=current_user,
         )
     )
@@ -173,7 +173,7 @@ def update_user():
         DBStorage().new(current_user)
         DBStorage().save()
 
-    return render_template("accounts/settings.html")
+    return render_template("settings.html")
 
 
 @core_view.route("/users/<user_id>", methods=["DELETE"])

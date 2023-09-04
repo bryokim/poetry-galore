@@ -1,3 +1,7 @@
+"""
+Endpoints for the category model.
+"""
+
 from flask import (
     abort,
     jsonify,
@@ -61,11 +65,8 @@ def get_poems_in_category(category_id):
     """
     category = DBStorage().get(Category, category_id)
 
-    # if not category:
-    #     abort(404)
-
     return render_template(
-        "accounts/home.html",
+        "home.html",
         poems=category.poems,
         themes=DBStorage().all(Theme).values(),
         categories=DBStorage().all(Category).values(),

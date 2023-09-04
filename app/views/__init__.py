@@ -3,8 +3,18 @@ from flask import Blueprint, make_response, jsonify
 accounts_view = Blueprint("accounts_view", __name__)
 core_view = Blueprint("core_view", __name__, url_prefix="/api/v1")
 
-from .account import *
-from .core import *
+from .register import *
+from .login import *
+from .home import *
+from .settings import *
+
+from .users import *
+from .poems import *
+from .poems_likes import *
+from .comments import *
+from .categories import *
+from .themes import *
+from .search import *
 
 
 @core_view.errorhandler(404)

@@ -25,4 +25,4 @@ from app.views import accounts_view
 @accounts_view.route("/settings")
 @login_required
 def user_settings():
-    return render_template('accounts/settings.html')
+    return render_template('settings.html')

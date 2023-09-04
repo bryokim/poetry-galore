@@ -73,7 +73,7 @@ def create_comment(poem_id):
     if DBStorage().get_by_attribute(
         Comment, user_id=current_user.id, poem_id=poem_id
     ):
-        return render_template("core/poem.html", poem=poem)
+        return render_template("poem.html", poem=poem)
 
     data = {
         "poem_id": poem_id,
@@ -86,7 +86,7 @@ def create_comment(poem_id):
     DBStorage().new(comment)
     DBStorage().save()
 
-    return render_template("core/poem.html", poem=poem)
+    return render_template("poem.html", poem=poem)
 
 
 @core_view.route("/poems/<poem_id>/comments/<comment_id>/update")
@@ -112,7 +112,7 @@ def update_comment(poem_id, comment_id):
     DBStorage().new(comment)
     DBStorage().save()
 
-    return render_template("core/poem.html", poem=poem)
+    return render_template("poem.html", poem=poem)
 
 
 @core_view.route("/poems/<poem_id>/comments/<comment_id>/delete")
@@ -135,7 +135,7 @@ def delete_comment(poem_id, comment_id):
         abort(404)
 
     if not comment:
-        render_template("core/poem.html", poem=poem)
+        render_template("poem.html", poem=poem)
 
     # if current_user.id != comment.user_id:
     #     abort(
@@ -146,4 +146,4 @@ def delete_comment(poem_id, comment_id):
     DBStorage().delete(comment)
     DBStorage().save()
 
-    return render_template("core/poem.html", poem=poem)
+    return render_template("poem.html", poem=poem)

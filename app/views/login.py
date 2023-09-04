@@ -54,9 +54,9 @@ def login():
             return redirect(url_for("accounts_view.home"))
         else:
             flash("Invalid username/password", "danger")
-            return render_template("accounts/login.html", form=form)
+            return render_template("login.html", form=form)
 
-    return render_template("accounts/login.html", form=form)
+    return render_template("login.html", form=form)
 
 
 @accounts_view.route("/login_by_google")

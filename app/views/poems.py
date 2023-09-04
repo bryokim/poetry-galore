@@ -62,7 +62,7 @@ def get_poem(poem_id):
     if not poem:
         abort(404)
 
-    return render_template("core/poem.html", poem=poem)
+    return render_template("poem.html", poem=poem)
 
 
 def create_themes(themes_str):
@@ -131,7 +131,7 @@ def create_poem():
         return redirect(url_for("core_view.get_poem", poem_id=new_poem.id))
 
     return render_template(
-        "accounts/post_poem.html",
+        "post_poem.html",
         form=form,
         themes=list(DBStorage().all(Theme).values())[:12],
     )
@@ -182,7 +182,7 @@ def update_poem(poem_id: str):
         form.themes.data = theme_names
 
     return render_template(
-        "accounts/update_poem.html",
+        "update_poem.html",
         form=form,
         category_name=category_name,
         themes=list(DBStorage().all(Theme).values())[:12],

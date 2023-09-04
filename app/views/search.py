@@ -36,14 +36,14 @@ def search_poems():
                 valid_poems[key] = poem
 
         return render_template(
-            "accounts/home.html",
+            "home.html",
             search=search_text,
             poems=valid_poems.values(),
             themes=DBStorage().all(Theme).values(),
         )
     else:
         return render_template(
-            "accounts/home.html",
+            "home.html",
             poems=DBStorage().all(Poem).values(),
             themes=DBStorage().all(Theme).values(),
         )

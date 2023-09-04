@@ -63,7 +63,7 @@ def get_poems_with_theme(theme_id):
     #     abort(404)
 
     return render_template(
-        "accounts/home.html",
+        "home.html",
         poems=theme.poems,
         themes=DBStorage().all(Theme).values(),
         categories=DBStorage().all(Category).values()

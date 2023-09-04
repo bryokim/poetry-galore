@@ -12,8 +12,6 @@ from sqlalchemy import Column, String, DateTime
 class BaseModel:
     """BaseModel class"""
 
-    __table_args__ = {"mysql_engine": "InnoDB", "mysql_charset": "utf8mb4"}
-
     id = Column(String(60), primary_key=True, nullable=False)
     updated_at = Column(DateTime(), default=datetime.utcnow(), nullable=False)
     created_at = Column(DateTime(), default=datetime.utcnow(), nullable=False)
