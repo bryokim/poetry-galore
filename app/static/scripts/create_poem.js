@@ -79,4 +79,33 @@ $(document).ready(function () {
       input.checked = true;
     }
   });
+
+  $("BUTTON#poem-load-btn").on("click", function (event) {
+    $("INPUT#poem-file").trigger("click");
+  });
+
+  $("INPUT#poem-file").on("change", function (event) {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+
+    reader.addEventListener("load", (event) => {
+      const result = event.target.result;
+      $("TEXTAREA#poem_body").val(result);
+      $("INPUT#title").val(file.name);
+    });
+
+    let allowedExtensions = /(\.doc|\.txt)$/i;
+    let allowedSize = 1_000_000;
+
+    if (file && !allowedExtensions.exec(file.name)) {
+      alert("Invalid file type");
+      return;
+    }
+    if (file && file.size > allowedSize) {
+      alert("Big file");
+      return;
+    }
+    reader.readAsText(file);
+    console.log(file.type);
+  });
 });
