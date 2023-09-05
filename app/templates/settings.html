@@ -41,9 +41,9 @@
 </div>
 
 <div class="row">
-  <div class="col-2"></div>
+  <div class="col-1 col-lg-3"></div>
   <div
-    class="col-8 d-flex flex-column align-content-center justify-content-center"
+    class="col-10 col-lg-6 d-flex flex-column align-content-center justify-content-center"
   >
     <form
       class="row g-3 mb-5 needs-validation"
@@ -52,8 +52,8 @@
       action="{{ url_for('core_view.update_user')}}"
       autocomplete="off"
     >
-      <div class="text-primary mb-3">Update username and email</div>
-      <div class="col-sm-12 col-md-6 mb-1 form-floating">
+      <div class="col-12 text-primary mb-3">Update username and email</div>
+      <div class="col-12 col-md-6 mb-1 form-floating">
         <input
           type="text"
           class="form-control-plaintext"
@@ -64,7 +64,7 @@
         <label for="current-username">Current username</label>
       </div>
 
-      <div class="col-sm-12 col-md-6 mb-2">
+      <div class="col-12 col-md-6 mb-2">
         <label for="new-username-input" class="form-label mb-1"
           >New username</label
         >
@@ -77,9 +77,9 @@
         />
       </div>
 
-      <div class="col-sm-12 col-md-2 position-relative d-none"></div>
+      <div class="col-12 col-md-2 position-relative d-none"></div>
 
-      <div class="col-sm-12 col-md-6 mb-1 form-floating">
+      <div class="col-12 col-md-6 mb-1 form-floating">
         <input
           type="email"
           class="form-control-plaintext"
@@ -90,7 +90,7 @@
         <label for="current-email">Current email</label>
       </div>
 
-      <div class="col-sm-12 col-md-6 mb-2">
+      <div class="col-12 col-md-6 mb-2">
         <label for="new-email-input" class="form-label">New email</label>
         <input
           type="email"
@@ -106,7 +106,7 @@
       <div class="row d-flex justify-content-center mt-3">
         <button
           type="submit"
-          class="col-sm-12 col-md-5 btn btn-outline-primary mb-2 ms-4 ms-md-0 update-user-btn"
+          class="col-12 col-md-5 btn btn-outline-primary mb-2 ms-4 ms-md-0 update-user-btn"
           formaction="{{ url_for('core_view.update_user') }}"
         >
           Update
@@ -121,7 +121,7 @@
       action="{{ url_for('core_view.update_user')}}"
     >
       <div class="text-warning mb-3">Change password</div>
-      <div class="col-sm-12 col-md-6 mb-1">
+      <div class="col-12 col-md-6 mb-1">
         <label for="current-password" class="form-label"
           >Current password</label
         >
@@ -140,7 +140,7 @@
         ></span>
       </div>
 
-      <div class="col-sm-12 col-md-6 mb-2">
+      <div class="col-12 col-md-6 mb-2">
         <label for="new-password-input" class="form-label">New password</label>
         <input
           type="password"
@@ -160,7 +160,7 @@
       <div class="row d-flex justify-content-center">
         <button
           type="submit"
-          class="col-sm-12 col-md-5 btn btn-outline-warning mb-2 ms-4 ms-md-0 update-password-btn"
+          class="col-12 col-md-5 btn btn-outline-warning mb-2 ms-4 ms-md-0 update-password-btn"
           formaction="{{ url_for('core_view.update_user') }}"
         >
           Change password
@@ -168,12 +168,12 @@
       </div>
     </form>
 
-    <div class="row border-top pt-5">
+    <div class="row border-top pt-2">
       <div class="col-12 text-danger mb-3">Delete account</div>
       <div class="row d-flex justify-content-center">
         <button
           type="submit"
-          class="col-5 btn btn-outline-danger mb-2"
+          class="col-12 col-md-5 btn btn-outline-danger mb-2  ms-4 ms-md-0"
           data-bs-toggle="modal"
           data-bs-target="#deleteConfirmation"
         >
@@ -182,6 +182,6 @@
       </div>
     </div>
   </div>
-  <div class="col-2"></div>
+  <div class="col-1 col-lg-3"></div>
 </div>
 {% endblock %}
