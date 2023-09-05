@@ -26,6 +26,14 @@
       <p class="">Your likes: 66</p>
       <p class="">Liked: 100</p>
     </div>
+
+    {% if current_user.is_authenticated and current_user == user %}
+    <div>
+      <a href="{{ url_for('core_view.update_user', user_id=current_user.id) }}">
+        <button class="btn btn-outline-primary">Update</button>
+      </a>
+    </div>
+    {% endif %}
   </div>
   <div class="col-sm-8 col-xl-6 text-center">
     <div class="container">
