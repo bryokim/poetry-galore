@@ -204,19 +204,17 @@ $(document).ready(function () {
     likeIcon = $(`#${poemId}-like`);
     likeCount = $(`SPAN#${poemId}-like-count`);
 
-    likeIcon.toggleClass("fa-regular fa-solid");
-
-    if (likeIcon.hasClass("fa-solid")) {
+    if (likeIcon.hasClass("fa-regular")) {
       $.get(`/api/v1/poems/${poemId}/like`, function (data) {
-        console.log(data);
         likeCount.html(data.likes);
-      }).done(function () {
+        likeIcon.removeClass("fa-regular").addClass("fa-solid");
         likeIcon.css("color", "#f20202");
-      });
+      })
     } else {
       likeIcon.css("color", "");
       $.get(`/api/v1/poems/${poemId}/unlike`, function (data) {
         likeCount.html(data.likes);
+        likeIcon.removeClass("fa-solid").addClass("fa-regular");
       });
     }
   });
