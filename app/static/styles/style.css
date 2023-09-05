@@ -58,6 +58,19 @@
   height: auto;
 }
 
+.like-help {
+  display: none;
+  background: #000;
+  border-radius: 1px;
+  font-size: 14px;
+  top: -20px;
+  right: -10px;
+}
+
+.like-button-disabled:hover .like-help {
+  display: inline-block;
+}
+
 @media (min-width: 576px) {
   .logo {
     width: 200px;

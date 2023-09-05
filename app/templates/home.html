@@ -22,15 +22,15 @@
       class="d-none d-lg-block sticky-top"
       style="top: 100px; width: 100%; z-index: 0"
     >
-      <div class="card mt-2">
-        <div class="card-body">
+      <div class="card mt-2 ps-0 border-0">
+        <div class="card-body ps-0">
           <h5 class="card-title">Categories</h5>
           <ul class="list-inline">
             {% for category in categories %}
             <li class="list-inline-item">
               <a
                 href="{{ url_for('core_view.get_poems_in_category', category_id=category.id)}}"
-                class="btn btn-outline-light btn-sm border-0 category-btn m-2"
+                class="btn btn-outline-light btn-sm border-0 category-btn m-2 ms-0"
                 id="{{ category.id}}"
                 >{{ category.name }}</a
               >
@@ -47,7 +47,7 @@
     <!-- <a href="{{ url_for('accounts_view.home') }}">Cancel search</a> -->
     {% endif %} {% for poem in poems %}
     <div
-      class="card text-center border-0 border-bottom mb-5 poem-container"
+      class="card text-center border-0 border-bottom rounded-0 mb-5 poem-container"
       id="{{ poem.id }}"
     >
       <div class="card-body pb-0">
@@ -69,24 +69,11 @@
           </a>
         </footer>
         <div class="row mt-3 bg-body">
-          <div class="col-12 text-start text-wrap">
-            <ul class="list-inline text-wrap">
-              {% for theme in poem.themes %}
-              <li class="list-inline-item">
-                <a
-                  class="text-info link-underline-primary link-underline-opacity-10 link-underline-opacity-100-hover link-offset-2"
-                  href="{{ url_for('core_view.get_poems_with_theme', theme_id=theme.id)}}"
-                  >#{{ theme.name }}</a
-                >
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-
           <div class="card-footer border-top-0 bg-body">
             <div class="row">
               <div class="col-3"></div>
               <div class="col-3 d-flex flex-column">
+                {% if current_user.is_authenticated %}
                 <button
                   type="button"
                   class="btn border-0 like-button"
@@ -94,17 +81,32 @@
                 >
                   {% if current_user in poem.likes %}
                   <i
-                    class="fa-solid fa-heart fa-2xl like-icon"
+                    class="fa-solid fa-heart fa-xl like-icon"
                     style="color: #f20202"
                     id="{{ poem.id }}-like"
                   ></i>
                   {% else %}
                   <i
-                    class="fa-regular fa-heart fa-2xl like-icon"
+                    class="fa-regular fa-heart fa-xl like-icon"
                     id="{{ poem.id }}-like"
                   ></i>
                   {% endif %}
                 </button>
+                {% else %}
+                <button
+                  type="button"
+                  class="btn border-0 like-button-disabled position-relative"
+                  data-id="{{ poem.id }}"
+                >
+                  <i
+                    class="fa-regular fa-heart fa-xl like-icon"
+                    id="{{ poem.id }}-like"
+                  ></i>
+                  <span class="position-absolute text-nowrap like-help"
+                    >Login to like</span
+                  >
+                </button>
+                {% endif %}
                 <span id="{{ poem.id }}-like-count"
                   >{{ poem.likes|length }}</span
                 >
@@ -119,7 +121,7 @@
                     class="btn border-0 comment-button"
                     data-id="{{ poem.id }}"
                   >
-                    <i class="fa-regular fa-comment-dots fa-2xl"></i>
+                    <i class="fa-regular fa-comment-dots fa-xl"></i>
                   </button>
                 </a>
                 <span id="{{ poem.id }}-comment-count"
