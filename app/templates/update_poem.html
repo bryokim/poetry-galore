@@ -71,8 +71,26 @@
           <div class="col-8 mb-5">
             <p>
               Can't find a category to match your poem?
-              <a class="text-decoration-none" href="#">Create one</a>
+              <a class="text-decoration-none" id="show-create-category" href="#" role="button">
+                Create one
+              </a>
             </p>
+
+            <div class="d-flex mt-3 d-none" id="create-category-container">
+              <input
+                type="text"
+                class="form-control me-4"
+                placeholder="New category"
+                id="new-category"
+              />
+              <button
+                class="btn btn-outline-light border-0"
+                type="button"
+                id="create-category"
+              >
+                Add
+              </button>
+            </div>
           </div>
         </div>
 

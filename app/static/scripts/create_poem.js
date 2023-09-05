@@ -38,8 +38,8 @@ $(document).ready(function () {
     "change",
     'input[type="checkbox"]',
     function (event) {
-      themesInput = $("INPUT#themes");
-      selectedThemes = themesInput.val();
+      const themesInput = $("INPUT#themes");
+      const selectedThemes = themesInput.val();
 
       if ($(this)[0].checked) {
         if (selectedThemes && selectedThemes.endsWith(",")) {
@@ -52,7 +52,7 @@ $(document).ready(function () {
           themesInput.val(`${$(this).val()}`);
         }
       } else {
-        newText = themesInput
+        let newText = themesInput
           .val()
           .replaceAll(new RegExp(`\\b(${$(this).val()}(, *)?)\\b`, "g"), "");
 
@@ -66,14 +66,14 @@ $(document).ready(function () {
     }
   );
 
-  selectedCategory = $("SELECT").attr("data-selected");
+  const selectedCategory = $("SELECT").attr("data-selected");
   Array.from($("OPTION")).forEach((option) => {
     if (option.value === selectedCategory) {
       option.selected = true;
     }
   });
 
-  themes = $("INPUT#themes").val().split(", ");
+  const themes = $("INPUT#themes").val().split(", ");
   Array.from($("INPUT.form-check-input")).forEach((input) => {
     if (themes.includes(input.value)) {
       input.checked = true;
@@ -106,6 +106,55 @@ $(document).ready(function () {
       return;
     }
     reader.readAsText(file);
-    console.log(file.type);
+  });
+
+  $("#show-create-category").on("click", (event) => {
+    $("DIV#create-category-container").removeClass("d-none");
+    event.stopPropagation();
+    event.preventDefault();
+  });
+
+  function createCategory(data) {
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        type: "POST",
+        url: "http://127.0.0.1:5000/api/v1/categories",
+        data: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        success: function (data) {
+          resolve(data);
+        },
+        error: function (error) {
+          reject(error);
+        },
+      });
+    });
+  }
+
+  $("BUTTON#create-category").on("click", (event) => {
+    const name = $("INPUT#new-category").val();
+
+    createCategory(`{ "name": "${name}" }`)
+      .then((data) => {
+        $("SELECT#category").append(
+          `<option value=${name} id="${name}-1">${name}</option>`
+        );
+        $(`OPTION#${name}-1`)[0].selected = true;
+      })
+      .catch((error) => {
+        console.log(error.responseJSON.error);
+      });
+
+    $("DIV#create-category-container").addClass("d-none");
+  });
+
+  $(`INPUT#new-category`).on("keypress", function (event) {
+    if (event.which === 13) {
+      $("BUTTON#create-category").trigger("click");
+      event.stopPropagation();
+      event.preventDefault();
+    }
   });
 });
