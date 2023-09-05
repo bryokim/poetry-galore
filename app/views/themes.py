@@ -4,7 +4,6 @@ from flask import (
     make_response,
     render_template,
     request,
-    url_for,
 )
 from flask_login import current_user, login_required
 

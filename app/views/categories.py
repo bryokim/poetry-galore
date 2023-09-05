@@ -8,9 +8,6 @@ from flask import (
     make_response,
     render_template,
     request,
-    url_for,
-    current_app,
-    session,
 )
 from flask_login import current_user, fresh_login_required, login_required
 
@@ -90,7 +87,7 @@ def create_category():
 
     data["name"] = data["name"].strip().title()
     if DBStorage().get_by_attribute(Category, name=data.get("name")):
-        abort(400, description="Category already registered")
+        abort(400, description="Category already exists")
 
     category = Category(**data)
 

@@ -5,10 +5,8 @@ from flask import (
     abort,
     jsonify,
     make_response,
-    redirect,
     render_template,
     request,
-    url_for,
 )
 from flask_login import current_user, fresh_login_required, login_required
 
