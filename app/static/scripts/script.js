@@ -153,13 +153,6 @@ $(document).ready(function () {
     }
   });
 
-  $("BUTTON.update-username-btn").on("click", function (event) {
-    if (!$("INPUT#new-username-input").hasClass("was-validated")) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  });
-
   $("INPUT#new-email-input").on("input", function () {
     newEmail = $(this).val();
     emailInput = $(this);
@@ -187,12 +180,22 @@ $(document).ready(function () {
     }
   });
 
-  $("BUTTON.update-email-btn").on("click", function (event) {
-    if (!$("INPUT#new-email-input").hasClass("was-validated")) {
+  $("BUTTON.update-user-btn").on("click", function (event) {
+    const usernameInput = $("INPUT#new-username-input");
+    const emailInput = $("INPUT#new-email-input");
+
+    if (usernameInput.val() || emailInput.val()) {
+      if (
+        usernameInput.hasClass("is-invalid") ||
+        emailInput.hasClass("is-invalid")
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      console.log("Running update");
+    } else {
       event.preventDefault();
       event.stopPropagation();
-    } else {
-      $("INPUT#current-email").val($("INPUT#new-email-input").val());
     }
   });
 
