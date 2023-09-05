@@ -46,16 +46,12 @@ def get_users():
 
 @core_view.route("/users/<username>")
 def get_user_profile(username):
-    # user = DBStorage().get_by_attribute(User, username=username)
-
-    # print(username)
-    # if not user:
-    #     return redirect(url_for("accounts_view.home"))
+    user = DBStorage().get_by_attribute(User, username=username)
 
     response = make_response(
         render_template(
             "profile.html",
-            user=current_user,
+            user=user,
         )
     )
 
@@ -138,7 +134,7 @@ def create_user():
 
 
 @core_view.route("/users/update", methods=["GET", "POST"])
-@fresh_login_required
+@login_required
 def update_user():
     """Update a user.
 
@@ -175,8 +171,8 @@ def update_user():
     return render_template("settings.html")
 
 
-@core_view.route("/users/<user_id>", methods=["DELETE"])
-@fresh_login_required
+@core_view.route("/users/<user_id>/delete")
+@login_required
 def delete_user(user_id: str):
     """Delete a user.
 
@@ -188,10 +184,7 @@ def delete_user(user_id: str):
     """
     user = DBStorage().get(User, user_id)
 
-    if not user:
-        abort(404)
-
     DBStorage().delete(user)
     DBStorage().save()
 
-    return make_response(jsonify({}), 200)
+    return redirect(url_for("accounts_view.home"))
