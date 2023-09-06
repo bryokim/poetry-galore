@@ -17,18 +17,18 @@
 
     <hr class="exc-divider" />
 
-    <div class="d-flex justify-content-around align-content-center mb-3">
-      <h6>10 <span class="badge rounded-pill text-bg-info">Followers</span></h6>
+    <!-- <div class="d-flex justify-content-around align-content-center mb-3">
+      <p class="badge rounded-pill text-bg-info">10 Followers</p>
       <p class="badge rounded-pill text-bg-info">100 Following</p>
-    </div>
+    </div> -->
 
-    <div>
+    <!-- <div>
       <p class="">Your likes: 66</p>
       <p class="">Liked: 100</p>
-    </div>
+    </div> -->
 
     {% if current_user.is_authenticated and current_user == user %}
-    <div>
+    <div class="float-end">
       <a href="{{ url_for('core_view.update_user', user_id=current_user.id) }}">
         <button class="btn btn-outline-primary">Update</button>
       </a>
@@ -37,11 +37,11 @@
   </div>
   <div class="col-sm-8 col-xl-6 text-center">
     <div class="container">
-      <h3 class="mb-4 text-body-tertiary">Your creations</h3>
+      <h3 class="mb-4 text-body-tertiary">{{ user.username }}'s Galore</h3>
       <div class="row row-cols-1 g-4">
         {% for poem in user.poems %}
         <div class="col">
-          <div class="card text-center border-secondary mb-5">
+          <div class="card text-center border-secondary mb-5 border-0 border-bottom rounded-0">
             <div class="card-body">
               <h5 class="card-title">
                 <a
@@ -50,9 +50,7 @@
                   >{{ poem.title }}</a
                 >
               </h5>
-              <p class="card-text" style="white-space: pre-wrap">
-                {{ poem.body }}
-              </p>
+              <p class="card-text" style="white-space: pre-wrap">{{ poem.body }}</p>
 
               <footer class="blockquote-footer text-end mb-0">
                 {{ poem.user.username }}
