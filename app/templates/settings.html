@@ -1,0 +1,187 @@
+{% extends "_base.html" %}{% block content %}
+<div
+  class="modal fade"
+  id="deleteConfirmation"
+  tabindex="-1"
+  aria-labelledby="deleteConfirmationLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0 pb-0">
+        <h1 class="modal-title fs-5" id="deleteConfirmationLabel">
+          Delete account
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body border-bottom-0">
+        Are you sure you want to delete your account? All poems posted
+        under your account will also be deleted.
+      </div>
+      <div class="modal-footer border-top-0">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          data-bs-dismiss="modal"
+        >
+          No
+        </button>
+
+        <a href="{{ url_for('core_view.delete_user', user_id=current_user.id) }}"
+          ><button class="btn btn-outline-danger">Yes</button></a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-1 col-lg-3"></div>
+  <div
+    class="col-10 col-lg-6 d-flex flex-column align-content-center justify-content-center"
+  >
+    <form
+      class="row g-3 mb-5 needs-validation"
+      role="form"
+      method="post"
+      action="{{ url_for('core_view.update_user')}}"
+      autocomplete="off"
+    >
+      <div class="col-12 text-primary mb-3">Update username and email</div>
+      <div class="col-12 col-md-6 mb-1 form-floating">
+        <input
+          type="text"
+          class="form-control-plaintext"
+          id="current-username"
+          readonly
+          value="{{ current_user.username }}"
+        />
+        <label for="current-username">Current username</label>
+      </div>
+
+      <div class="col-12 col-md-6 mb-2">
+        <label for="new-username-input" class="form-label mb-1"
+          >New username</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="new-username-input"
+          placeholder="Brian Kim"
+          name="username"
+        />
+      </div>
+
+      <div class="col-12 col-md-2 position-relative d-none"></div>
+
+      <div class="col-12 col-md-6 mb-1 form-floating">
+        <input
+          type="email"
+          class="form-control-plaintext"
+          id="current-email"
+          readonly
+          value="{{ current_user.email}}"
+        />
+        <label for="current-email">Current email</label>
+      </div>
+
+      <div class="col-12 col-md-6 mb-2">
+        <label for="new-email-input" class="form-label">New email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="new-email-input"
+          placeholder="example@email.com"
+          name="email"
+        />
+      </div>
+
+      <div class="col-2 position-relative d-none"></div>
+
+      <div class="row d-flex justify-content-center mt-3">
+        <button
+          type="submit"
+          class="col-12 col-md-5 btn btn-outline-primary mb-2 ms-4 ms-md-0 update-user-btn"
+          formaction="{{ url_for('core_view.update_user') }}"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+
+    <form
+      class="row g-3 mb-5 needs-validation border-top"
+      role="form"
+      method="post"
+      action="{{ url_for('core_view.update_user')}}"
+    >
+      <div class="text-warning mb-3">Change password</div>
+      <div class="col-12 col-md-6 mb-1">
+        <label for="current-password" class="form-label"
+          >Current password</label
+        >
+        <input
+          type="password"
+          class="form-control"
+          id="current-password"
+          name="current-password"
+          minlength="8"
+          maxlength="30"
+          required
+        />
+        <span
+          toggle="#current-password"
+          class="fa fa-fw fa-eye toggle-password password-update"
+        ></span>
+      </div>
+
+      <div class="col-12 col-md-6 mb-2">
+        <label for="new-password-input" class="form-label">New password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="new-password-input"
+          name="password"
+          minlength="8"
+          maxlength="30"
+          required
+        />
+        <span
+          toggle="#new-password-input"
+          class="fa fa-fw fa-eye toggle-password password-update"
+        ></span>
+      </div>
+
+      <div class="row d-flex justify-content-center">
+        <button
+          type="submit"
+          class="col-12 col-md-5 btn btn-outline-warning mb-2 ms-4 ms-md-0 update-password-btn"
+          formaction="{{ url_for('core_view.update_user') }}"
+        >
+          Change password
+        </button>
+      </div>
+    </form>
+
+    <div class="row border-top pt-2">
+      <div class="col-12 text-danger mb-3">Delete account</div>
+      <div class="row d-flex justify-content-center">
+        <button
+          type="submit"
+          class="col-12 col-md-5 btn btn-outline-danger mb-2  ms-4 ms-md-0"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteConfirmation"
+        >
+          Delete account
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-1 col-lg-3"></div>
+</div>
+{% endblock %}

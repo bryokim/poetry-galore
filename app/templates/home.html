@@ -1,0 +1,181 @@
+{% extends '_base.html' %} {% block content %}
+
+<div class="row">
+  <div class="col-lg-3">
+    <form
+      class="d-flex d-lg-none mt-3 mb-4"
+      method="get"
+      action="{{ url_for('core_view.search_poems') }}"
+    >
+      <input
+        class="form-control me-2"
+        type="search"
+        placeholder="Search by poem title..."
+        name="search"
+      />
+      <button class="btn-outline-light btn border-0" type="submit">
+        <i class="fa-solid fa-magnifying-glass fa-xl align-self-center"></i>
+      </button>
+    </form>
+
+    <div
+      class="d-none d-lg-block sticky-top"
+      style="top: 100px; width: 100%; z-index: 0"
+    >
+      <div class="card mt-2 ps-0 border-0">
+        <div class="card-body ps-0">
+          <h5 class="card-title">Categories</h5>
+          <ul class="list-inline">
+            {% for category in categories %}
+            <li class="list-inline-item">
+              <a
+                href="{{ url_for('core_view.get_poems_in_category', category_id=category.id)}}"
+                class="btn btn-outline-light btn-sm border-0 category-btn m-2 ms-0"
+                id="{{ category.id}}"
+                >{{ category.name }}</a
+              >
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    {% if search %}
+    <h5 class="text-center mb-3">Showing results for '{{ search }}'</h5>
+    <!-- <a href="{{ url_for('accounts_view.home') }}">Cancel search</a> -->
+    {% endif %} {% for poem in poems %}
+    <div
+      class="card text-center border-0 border-bottom rounded-0 mb-5 poem-container"
+      id="{{ poem.id }}"
+    >
+      <div class="card-body pb-0">
+        <h5 class="card-title">
+          <a
+            href="{{ url_for('core_view.get_poem', poem_id=poem.id) }}"
+            class="link-info link-underline-opacity-10 link-underline-opacity-50-hover link-offset-2"
+            >{{ poem.title }}</a
+          >
+        </h5>
+        <p class="card-text" style="white-space: pre-wrap">{{ poem.body }}</p>
+
+        <footer class="blockquote-footer text-end mb-0">
+          <a
+            href="{{ url_for('core_view.get_user_profile', username=poem.user.username) }}"
+            class="text-white link-underline link-underline-opacity-10 link-underline-opacity-100-hover link-offset-2"
+          >
+            <i>{{ poem.user.username }}</i>
+          </a>
+        </footer>
+        <div class="row mt-3 bg-body">
+          <div class="card-footer border-top-0 bg-body">
+            <div class="row">
+              <div class="col-3"></div>
+              <div class="col-3 d-flex flex-column">
+                {% if current_user.is_authenticated %}
+                <button
+                  type="button"
+                  class="btn border-0 like-button"
+                  data-id="{{ poem.id }}"
+                >
+                  {% if current_user in poem.likes %}
+                  <i
+                    class="fa-solid fa-heart fa-xl like-icon"
+                    style="color: #f20202"
+                    id="{{ poem.id }}-like"
+                  ></i>
+                  {% else %}
+                  <i
+                    class="fa-regular fa-heart fa-xl like-icon"
+                    id="{{ poem.id }}-like"
+                  ></i>
+                  {% endif %}
+                </button>
+                {% else %}
+                <button
+                  type="button"
+                  class="btn border-0 like-button-disabled position-relative"
+                  data-id="{{ poem.id }}"
+                >
+                  <i
+                    class="fa-regular fa-heart fa-xl like-icon"
+                    id="{{ poem.id }}-like"
+                  ></i>
+                  <span class="position-absolute text-nowrap like-help"
+                    >Login to like</span
+                  >
+                </button>
+                {% endif %}
+                <span id="{{ poem.id }}-like-count"
+                  >{{ poem.likes|length }}</span
+                >
+              </div>
+              <div class="col-3 d-flex flex-column">
+                <a
+                  href="{{ url_for('core_view.get_poem', poem_id=poem.id) }}"
+                  class="text-decoration-none"
+                >
+                  <button
+                    type="button"
+                    class="btn border-0 comment-button"
+                    data-id="{{ poem.id }}"
+                  >
+                    <i class="fa-regular fa-comment-dots fa-xl"></i>
+                  </button>
+                </a>
+                <span id="{{ poem.id }}-comment-count"
+                  >{{ poem.comments|length }}</span
+                >
+              </div>
+              <div class="col-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %} {% if poems|length == 0 %}
+    <p class="text-center">No poems found</p>
+    {% endif %}
+  </div>
+  <div class="col-lg-4 d-lg-block d-none mb-5">
+    <div class="sticky-top" style="top: 100px; width: 100%; z-index: 0">
+      <form
+        class="d-flex mt-3 mb-5"
+        method="get"
+        action="{{ url_for('core_view.search_poems') }}"
+      >
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search by poem title..."
+          name="search"
+        />
+
+        <button class="btn-outline-light btn border-0" type="submit">
+          <i class="fa-solid fa-magnifying-glass fa-xl align-self-center"></i>
+        </button>
+      </form>
+
+      <div class="card border-0">
+        <div class="card-body">
+          <p class="card-text">Filter by theme</p>
+          <ul class="list-inline">
+            {% for theme in themes %}
+            <li class="list-inline-item">
+              <a
+                class="btn btn-outline-primary btn-sm border-0 theme-btn m-2"
+                id="{{ theme.id}}"
+                >#{{ theme.name }}</a
+              >
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends "_base.html" %} {% block content %}
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <main class="form-signin w-100 m-auto">
+      <form role="form" method="post" action="">
+        {{ form.csrf_token }}
+        <h1 class="h3 mb-3 fw-normal text-center">Update</h1>
+
+        <div class="first-page">
+          <div class="form-floating">
+            {{ form.title(placeholder="title", class="form-control mb-2") }} {{
+            form.title.label }} {% if form.title.errors %} {% for error in
+            form.title.errors %}
+            <div class="form-text text-danger text-center">{{ error }}</div>
+            {% endfor %} {% endif %}
+          </div>
+
+          <div class="form-floating">
+            {{ form.poem_body(placeholder="body", class="form-control mb-4",
+            style="height:300px;")}} {{ form.poem_body.label}} {% if
+            form.poem_body.errors %} {% for error in form.poem_body.errors %}
+            <div class="form-text text-danger text-center">{{ error }}</div>
+            {% endfor %} {% endif %}
+          </div>
+        </div>
+
+        <div class="row second-page d-none d-flex justify-content-center">
+          <div class="col-8 mb-5">
+            <div class="mb-2">
+              {{ form.themes.label(class="form-label")}} {{
+              form.themes(placeholder="Happy, sad", class="form-control")}} {%
+              if form.themes.errors %} {% for error in form.themes.errors %}
+              <div class="form-text text-danger text-center">{{ error }}</div>
+              {% endfor %} {% endif %}
+              <div id="themesHelpBlock" class="form-text">
+                Example: Happy, sad, gloomy
+              </div>
+            </div>
+
+            {% if themes %}
+            <div class="p-2 border-secondary rounded bg-dark-subtle">
+              <div class="form-text mb-2">Choose below or write your own.</div>
+              {% for theme in themes %}
+              <div class="form-check form-check-inline theme-checkbox">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="{{ theme.name }}"
+                  id="{{ theme.id }}"
+                  value="{{ theme.name }}"
+                />
+                <label class="form-check-label" for="{{ theme.id }}">
+                  {{ theme.name }}
+                </label>
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="col-8 mb-2">
+            {{ form.category.label(class="form-label")}} {{
+            form.category(placeholder="category", class="form-select",
+            data_selected=category_name) }} {% if form.category.errors
+            %} {% for error in form.category.errors %}
+            <div class="form-text text-danger text-center">{{ error }}</div>
+            {% endfor %} {% endif %}
+          </div>
+
+          <div class="col-8 mb-5">
+            <p>
+              Can't find a category to match your poem?
+              <a class="text-decoration-none" id="show-create-category" href="#" role="button">
+                Create one
+              </a>
+            </p>
+
+            <div class="d-flex mt-3 d-none" id="create-category-container">
+              <input
+                type="text"
+                class="form-control me-4"
+                placeholder="New category"
+                id="new-category"
+              />
+              <button
+                class="btn btn-outline-light border-0"
+                type="button"
+                id="create-category"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-4"></div>
+          <div class="col-4 d-flex justify-content-around">
+            <button
+              class="btn btn-md btn-outline-light border-0 me-4 d-none"
+              id="prev-btn"
+              type="button"
+              aria-label="previous button"
+            >
+              <i class="fa-solid fa-arrow-left fa-2xl"></i>
+            </button>
+            <button
+              class="btn btn-md btn-outline-light border-0"
+              id="next-btn"
+              type="button"
+              aria-label="next button"
+            >
+              <i class="fa-solid fa-arrow-right fa-2xl"></i>
+            </button>
+            <button
+              class="btn btn-md btn-outline-success border-0 d-none"
+              id="post-btn"
+              type="submit"
+              aria-label="post poem button"
+            >
+              <i class="fa-solid fa-check fa-2xl"></i>
+            </button>
+          </div>
+          <div class="col-4"></div>
+        </div>
+      </form>
+    </main>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+{% endblock %} {% block js %}
+<script src="/static/scripts/create_poem.js"></script>
+{% endblock %}
