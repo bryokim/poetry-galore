@@ -83,7 +83,7 @@ def validate_email(email):
         return make_response(jsonify({"success": "Email found"}))
 
 
-@core_view.route("/users/<user_id>")
+@core_view.route("/users/id/<user_id>")
 @login_required
 def get_user(user_id: str):
     """Get a user by user_id.
@@ -94,14 +94,31 @@ def get_user(user_id: str):
     Returns:
         dict: The requested user.
     """
-    # user = DBStorage().get(User, user_id)
+    print(user_id)
+    user = DBStorage().get(User, user_id)
 
+    print(user)
+    print("Here")
     # if not user:
     #     abort(404)
 
-    return redirect(
-        url_for("core_view.get_user_profile", username=current_user.username)
+    # return redirect(
+    #     url_for("core_view.get_user_profile", username=current_user.username)
+    # )
+
+    response = make_response(
+        render_template(
+            "profile.html",
+            user=user,
+        )
     )
+
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    response.headers["Cache-Control"] = "public, max-age=0"
+
+    return response
 
 
 @core_view.route("/users", methods=["POST"])
