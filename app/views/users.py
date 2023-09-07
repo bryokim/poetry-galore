@@ -94,17 +94,7 @@ def get_user(user_id: str):
     Returns:
         dict: The requested user.
     """
-    print(user_id)
     user = DBStorage().get(User, user_id)
-
-    print(user)
-    print("Here")
-    # if not user:
-    #     abort(404)
-
-    # return redirect(
-    #     url_for("core_view.get_user_profile", username=current_user.username)
-    # )
 
     response = make_response(
         render_template(
