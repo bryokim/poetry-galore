@@ -21,13 +21,13 @@
       crossorigin="anonymous"
     />
   </head>
-  <body class="text-dark" style="background: rgba(34, 193, 195, 1) 50%">
+  <body class="text-dark" style="background: #00d1cd">
     <div
       class="row me-0"
       style="
         background: linear-gradient(
           0deg,
-          rgba(34, 193, 195, 1) 50%,
+          rgba(0, 209, 205, 1) 50%,
           rgba(0, 0, 0, 1) 50%
         );
       "
@@ -53,6 +53,7 @@
               <a
                 href="https://bryokim.pythonanywhere.com"
                 class="d-none d-md-inline"
+                target="_blank"
               >
                 <button class="btn btn-outline-info border-0 p-1 p-lg-auto">
                   Live Demo
@@ -103,23 +104,13 @@
           alt="poetry galore home page"
           class="img-fluid rounded-3 mb-3 d-none d-md-block"
         />
-        <a href="https://bryokim.pythonanywhere.com">
+        <a href="https://bryokim.pythonanywhere.com" target="_blank">
           <button class="btn btn-primary btn-lg">Live Demo</button>
         </a>
       </div>
       <div class="col-1"></div>
     </div>
-    <div
-      class="container-fluid pt-5"
-      style="
-        background: linear-gradient(
-          180deg,
-          rgba(34, 193, 195, 1) 23%,
-          rgba(241, 241, 125, 1) 100%,
-          rgba(7, 7, 7, 1) 100%
-        );
-      "
-    >
+    <div class="container-fluid pt-5">
       <div class="container mt-5">
         <h1 id="features">Features</h1>
         <hr />
@@ -283,9 +274,8 @@
       style="
         background: linear-gradient(
           180deg,
-          rgba(241, 241, 125, 1) 0%,
-          rgba(0, 58, 209, 1) 100%,
-          rgba(7, 7, 7, 1) 100%
+          rgba(0, 209, 205, 1) 0%,
+          rgba(5, 78, 140, 1) 100%
         );
       "
     >
@@ -304,50 +294,67 @@
               <br />
               This project was started as a portfolio project for the Software
               Engineering course at
-              <a href="https://www.holbertonschool.com/" target="_blank"
+              <a
+                href="https://www.holbertonschool.com/"
+                target="_blank"
+                class="text-light link-offset-2"
                 >Holberton School</a
-              >
+              >.
             </p>
           </div>
           <div class="col-12 mt-5">
             <h2 class="mt-4 mt-lg-0">Contributors</h2>
             <hr />
             <section class="ms-2 mb-3">
-              <h3 class="fs-5 text-light fw-normal">Brian Kimathi</h3>
+              <h3
+                class="fs-5 fw-normal text-white"
+                style="font-family: Arapey, 'Courier New', Courier, monospace"
+              >
+                Brian Kimathi
+              </h3>
               <a
                 href="https://github.com/bryokim"
-                class="ms-2 me-4 text-reset text-decoration-none"
+                class="ms-2 me-4 text-white text-decoration-none"
               >
                 <i class="fab fa-github fa-xl"></i>
               </a>
-              <a href="#" class="ms-2 me-4 text-reset text-decoration-none">
+              <a href="#" class="ms-2 me-4 text-white text-decoration-none">
                 <i class="fab fa-linkedin fa-xl"></i>
               </a>
-              <a href="#" class="ms-2 me-4 text-reset text-decoration-none">
+              <a href="#" class="ms-2 me-4 text-white text-decoration-none">
                 <i class="fab fa-twitter fa-xl"></i>
               </a>
             </section>
-            <section class="ms-2">
-              <h3 class="fs-5 text-light fw-normal">Reagan Ronald</h3>
+            <section class="ms-2 mb-4">
+              <h3
+                class="fs-5 fw-normal text-white"
+                style="font-family: Arapey, 'Courier New', Courier, monospace"
+              >
+                Reagan Ronald
+              </h3>
               <a
                 href="https://github.com/thatboyreegan"
-                class="ms-2 me-4 text-reset text-decoration-none"
+                class="ms-2 me-4 text-white text-decoration-none"
               >
                 <i class="fab fa-github fa-xl"></i>
               </a>
-              <a href="#" class="ms-2 me-4 text-reset text-decoration-none">
+              <a href="#" class="ms-2 me-4 text-white text-decoration-none">
                 <i class="fab fa-linkedin fa-xl"></i>
               </a>
-              <a href="#" class="ms-2 me-4 text-reset text-decoration-none">
+              <a href="#" class="ms-2 me-4 text-white text-decoration-none">
                 <i class="fab fa-twitter fa-xl"></i>
               </a>
             </section>
+            <p style="color: white">
+              Thank you to everyone else whose been part of this project. We
+              value your contribution.
+            </p>
           </div>
-          <div class="col-12 mt-5">
-            <h5 class="fw-bold">Project repository</h5>
+          <div class="col-12 mt-3">
+            <h5 class="fw-bold text-light">Project repository</h5>
             <a
               href="https://github.com/bryokim/poetry-galore"
-              class="ms-2 me-4 text-reset text-decoration-none"
+              class="ms-2 me-4 text-light link-offset-2"
             >
               <i class="fab fa-github fa-xl"></i> poetry-galore
             </a>
@@ -356,10 +363,20 @@
       </div>
 
       <footer
-        class="text-center border-top border-dark text-light"
-        style="height: 50px"
+        class="container border-top border-dark text-light"
+        style="height: auto"
       >
-        <i class="fa-regular fa-copyright fa-md mt-4"></i> 2023 Brian & Reagan
+        <div class="row">
+          <div
+            class="col-12 col-sm-4 text-start d-flex align-items-end justify-content-center justify-content-sm-start"
+          >
+            Made with 🤍 from 🇰🇪
+          </div>
+          <div class="col-12 col-sm-4 text-center">
+            <i class="fa-regular fa-copyright fa-md mt-4"></i> 2023 Brian &
+            Reagan
+          </div>
+        </div>
       </footer>
     </div>
 
