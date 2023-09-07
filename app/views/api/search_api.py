@@ -6,18 +6,16 @@ from flask import (
     make_response,
     render_template,
     request,
-    url_for,
 )
-from flask_login import current_user, fresh_login_required, login_required
 
-from app.views import core_view
+from app.views import api_view
 from app.models.category import Category
 from app.models.poem import Poem
 from app.models.theme import Theme
 from app.models.engine.db_storage import DBStorage
 
 
-@core_view.route("/search")
+@api_view.route("/search")
 def search_poems():
     """Search for poems matching the query parameter search.
     The poem title is matched to the query parameter.
@@ -51,7 +49,7 @@ def search_poems():
         )
 
 
-@core_view.route("/search_by_theme", methods=["POST"])
+@api_view.route("/search_by_theme", methods=["POST"])
 def search_by_theme():
     """Search for poems by themes.
 
