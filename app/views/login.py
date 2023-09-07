@@ -16,7 +16,6 @@ from app import bcrypt
 from app.models.user import User
 from app.forms.login_form import LoginForm
 from app.utils.decorators import logout_required
-from app.views import accounts_view
 from app.views import core_view
 from app.models.engine.db_storage import DBStorage
 
