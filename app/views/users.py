@@ -175,7 +175,7 @@ def update_user():
         DBStorage().new(current_user)
         DBStorage().save()
 
-    return render_template("settings.html")
+    return render_template("update_user.html")
 
 
 @core_view.route("/users/<user_id>/delete")
