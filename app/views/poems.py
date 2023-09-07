@@ -208,4 +208,4 @@ def delete_poem(poem_id):
     DBStorage().delete(poem)
     DBStorage().save()
 
-    return redirect(url_for("accounts_view.home"))
+    return redirect(url_for("core_view.home"))

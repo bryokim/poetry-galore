@@ -17,6 +17,7 @@ from app.models.user import User
 from app.forms.login_form import LoginForm
 from app.utils.decorators import logout_required
 from app.views import accounts_view
+from app.views import core_view
 from app.models.engine.db_storage import DBStorage
 
 
@@ -50,7 +51,7 @@ def login():
                 next_url = request.args["next"]
                 return redirect(next_url)
 
-            return redirect(url_for("accounts_view.home"))
+            return redirect(url_for("core_view.home"))
         else:
             flash("Invalid username/password", "danger")
             return render_template("login.html", form=form)
@@ -122,4 +123,4 @@ def callback():
 
     login_user(user)
 
-    return redirect(url_for("accounts_view.home"))
+    return redirect(url_for("core_view.home"))

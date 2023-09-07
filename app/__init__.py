@@ -60,6 +60,6 @@ def create_app():
     app.register_blueprint(accounts_view)
     app.register_blueprint(api_view)
     app.register_blueprint(core_view)
-    app.add_url_rule("/", endpoint="accounts_view.home")
+    app.add_url_rule("/", endpoint="core_view.home")
 
     return app
