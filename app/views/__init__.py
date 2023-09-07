@@ -2,6 +2,7 @@ from flask import Blueprint, make_response, jsonify
 
 accounts_view = Blueprint("accounts_view", __name__)
 core_view = Blueprint("core_view", __name__, url_prefix="/api/v1")
+api_view = Blueprint("api_view", __name__, url_prefix="/api/v2")
 
 from .register import *
 from .login import *
@@ -14,6 +15,8 @@ from .comments import *
 from .categories import *
 from .themes import *
 from .search import *
+
+from .api import *
 
 
 @core_view.errorhandler(404)

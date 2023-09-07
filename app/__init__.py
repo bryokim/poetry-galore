@@ -54,9 +54,11 @@ def create_app():
         return User.query.filter(User.alternative_id == user_id).first()
 
     from app.views import accounts_view
+    from app.views import api_view
     from app.views import core_view
 
     app.register_blueprint(accounts_view)
+    app.register_blueprint(api_view)
     app.register_blueprint(core_view)
     app.add_url_rule("/", endpoint="accounts_view.home")
 
