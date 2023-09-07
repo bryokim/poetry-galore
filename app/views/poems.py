@@ -1,7 +1,14 @@
+"""Module for the core_view poem routes.
+
+These routes are used for rendering the web pages after doing some
+operation depending on the request.
+
+There are routes for creating, updating, retrieving and deleting
+poems.
+"""
+
 from flask import (
     abort,
-    jsonify,
-    make_response,
     redirect,
     request,
     render_template,
@@ -13,38 +20,8 @@ from app.views import core_view
 from app.models.category import Category
 from app.models.poem import Poem
 from app.models.theme import Theme
-from app.models.user import User
 from app.models.engine.db_storage import DBStorage
 from app.forms.poem_form import PoemForm
-
-
-@core_view.route("/poems")
-def get_poems():
-    """Get all poems.
-
-    Returns:
-        list: List of all the poems.
-    """
-    poems = DBStorage().all(Poem)
-    poems_dictionaries = [poem.to_dict() for poem in poems.values()]
-
-    for poem in poems_dictionaries:
-        poem["url"] = url_for(
-            "core_view.get_poem", poem_id=poem["id"], _external=True
-        )
-        del poem["id"]
-
-        poem["user"] = (
-            DBStorage().get(User, poem["user_id"]).to_dict(password=False)
-        )
-
-        poem["user"]["url"] = url_for(
-            "core_view.get_user", user_id=poem["user_id"], _external=True
-        )
-        del poem["user_id"]
-        del poem["user"]["id"]
-
-    return make_response(jsonify(poems_dictionaries), 200)
 
 
 @core_view.route("/poems/<poem_id>")
@@ -55,7 +32,7 @@ def get_poem(poem_id):
         poem_id (str): The poem id.
 
     Returns:
-        dict: The requested poem.
+        Response: Render the requested poem.
     """
     poem = DBStorage().get(Poem, poem_id)
 
@@ -66,6 +43,16 @@ def get_poem(poem_id):
 
 
 def create_themes(themes_str):
+    """Create themes entered by the user while creating a new poem.
+    If the theme already exists it is not created rather the existing
+    one is returned.
+
+    Args:
+        themes_str (str): Comma separated string of the themes.
+
+    Returns:
+        list: A list of the theme objects to be added to the poem.
+    """
     if not themes_str:
         return []
 
@@ -87,6 +74,16 @@ def create_themes(themes_str):
 
 
 def create_category(category_name):
+    """Create category entered by the user while creating a new poem.
+    If the category already exists it is not created rather the existing
+    one is returned.
+
+    Args:
+        category_name (str): Name of the category.
+
+    Returns:
+        list: A list of the category object to be added to the poem.
+    """
     name = category_name.strip().title()
 
     category = DBStorage().get_by_attribute(Category, name=name)
@@ -102,9 +99,16 @@ def create_category(category_name):
 @login_required
 def create_poem():
     """Post a poem.
+    Themes and category selected during creation are added to the poem.
+    If they are not present in the database, then they are first created
+    and added to the poem.
+
+    User has to be logged in for this operation to be successful.
 
     Returns:
-        dict: The newly created poem.
+        Response: Renders the post_poem.html template on a GET
+            request and redirects to the get_poem endpoint on
+            a POST request to render the created poem.
     """
 
     form = PoemForm(request.form)
@@ -141,12 +145,15 @@ def create_poem():
 @login_required
 def update_poem(poem_id: str):
     """Update a poem.
+    User has to be logged in for this operation to be successful.
 
     Args:
         poem_id (str): The poem id.
 
     Returns:
-        dict: The updated poem.
+        Response: Renders the update_poem.html template on a GET
+            request and redirects to the get_poem endpoint on
+            a POST request to render the updated poem.
     """
     form = PoemForm(request.form)
     form.category.choices = [
@@ -193,17 +200,16 @@ def update_poem(poem_id: str):
 @login_required
 def delete_poem(poem_id):
     """Delete a poem.
+    User has to be logged in for this operation to be successful.
 
     Args:
         poem_id (str): The poem id.
 
     Returns:
-        dict: An empty dictionary.
+        Response: Redirects to the home endpoint if user is
+            deleted successfully.
     """
     poem = DBStorage().get(Poem, poem_id)
-
-    # if not poem:
-    #     abort(404)
 
     DBStorage().delete(poem)
     DBStorage().save()
