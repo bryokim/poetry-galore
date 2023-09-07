@@ -44,8 +44,10 @@
   <div class="col-lg-5">
     {% if search %}
     <h5 class="text-center mb-3">Showing results for '{{ search }}'</h5>
-    <!-- <a href="{{ url_for('accounts_view.home') }}">Cancel search</a> -->
-    {% endif %} {% for poem in poems %}
+    <!-- <a href="{{ url_for('core_view.home') }}">Cancel search</a> -->
+    {% endif %} {% if category_search %}
+    <h5 class="text-center mb-3">Showing poems in '{{ category_search }}' category</h5>
+    {% endif %}{% for poem in poems %}
     <div
       class="card text-center border-0 border-bottom rounded-0 mb-5 poem-container"
       id="{{ poem.id }}"
