@@ -14,6 +14,7 @@ $(document).ready(function () {
     }
   });
 
+  // Request for poems not matching the selected theme.
   function searchByTheme(data) {
     return $.ajax({
       type: "POST",
@@ -31,6 +32,8 @@ $(document).ready(function () {
   }
   let selectedThemes = [];
 
+  // Hide the invalid poems when a theme is selected.
+  // When a theme is unselected, show poems matching remaining themes.
   $(".theme-btn").on("click", function () {
     $(this).toggleClass("active");
     const themeId = $(this).attr("id");
