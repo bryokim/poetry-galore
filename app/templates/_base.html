@@ -34,39 +34,39 @@
   <body class="bg-dark position-relative" data-bs-theme="dark">
     {% include "navigation.html" %}
 
-    <div class="container">
-      <br />
-      <!--messages-->
-      {% with messages = get_flashed_messages(with_categories=True) %} {% if
-      messages %}
-      <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-          {% for category, message in messages %}
-          <div
-            class="alert alert-{{ categoty }} alert-dismissible fade show"
-            role="alert"
-          >
-            {{ message }}
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="alert"
-              arial-label="Close"
-            ></button>
+    <div class="d-flex flex-column min-vh-100">
+      <div class="container">
+        <br />
+        <!--messages-->
+        {% with messages = get_flashed_messages(with_categories=True) %} {% if
+        messages %}
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            {% for category, message in messages %}
+            <div
+              class="alert alert-{{ categoty }} alert-dismissible fade show"
+              role="alert"
+            >
+              {{ message }}
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                arial-label="Close"
+              ></button>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
+          <div class="col-md-4"></div>
         </div>
-        <div class="col-md-4"></div>
+        {% endif %} {% endwith %}
+
+        <!--child template-->
+        {% block content %}{% endblock %}
       </div>
-      {% endif %} {% endwith %}
-
-      <!--child template-->
-      {% block content %}{% endblock %}
+    {% block footer %}{% endblock %}
     </div>
-
-    <!-- footer -->
-
     <!--scripts-->
     <script
       src="https://code.jquery.com/jquery-3.6.1.min.js"
