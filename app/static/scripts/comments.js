@@ -19,7 +19,7 @@ $(document).ready(function () {
       let newComment = $(`INPUT#${commentId}-1`).val();
 
       $.get(
-        `http://127.0.0.1:5000/api/v1/poems/${poemId}/comments/${commentId}/update?text=${newComment.trim()}`
+        `http://127.0.0.1:5000/poems/${poemId}/comments/${commentId}/update?text=${newComment.trim()}`
       );
 
       $(`LI.comment-item DIV#${commentId}`).replaceWith(
