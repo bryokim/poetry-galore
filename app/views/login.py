@@ -32,7 +32,7 @@ def get_google_provider_cfg():
     return requests.get(GOOGLE_DISCOVERY_URL).json()
 
 
-@accounts_view.route("/login", methods=["GET", "POST"])
+@core_view.route("/login", methods=["GET", "POST"])
 @logout_required
 def login():
     form = LoginForm(request.form)
@@ -59,7 +59,7 @@ def login():
     return render_template("login.html", form=form)
 
 
-@accounts_view.route("/login_by_google")
+@core_view.route("/login_by_google")
 def login_by_google():
     goggle_provider_cfg = get_google_provider_cfg()
     authorization_endpoint = goggle_provider_cfg["authorization_endpoint"]
@@ -75,7 +75,7 @@ def login_by_google():
     return redirect(request_uri)
 
 
-@accounts_view.route("/login_by_google/callback")
+@core_view.route("/login_by_google/callback")
 def callback():
     code = request.args.get("code")
     google_provider_cfg = get_google_provider_cfg()

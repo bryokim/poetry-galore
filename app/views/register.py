@@ -51,7 +51,7 @@ def register():
         # flash("A confirmation email has been sent via email", "success")
 
         # return redirect(url_for("accounts.inactive"))
-        return redirect(url_for("accounts_view.login"))
+        return redirect(url_for("core_view.login"))
 
     return render_template("register.html", form=form)
 
@@ -61,4 +61,4 @@ def register():
 def logout():
     logout_user()
     flash("You were logged out.", "success")
-    return redirect(url_for("accounts_view.login"))
+    return redirect(url_for("core_view.login"))
