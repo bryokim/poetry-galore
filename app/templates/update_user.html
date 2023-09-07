@@ -20,8 +20,8 @@
         ></button>
       </div>
       <div class="modal-body border-bottom-0">
-        Are you sure you want to delete your account? All poems posted
-        under your account will also be deleted.
+        Are you sure you want to delete your account? All poems posted under
+        your account will also be deleted.
       </div>
       <div class="modal-footer border-top-0">
         <button
@@ -32,7 +32,8 @@
           No
         </button>
 
-        <a href="{{ url_for('core_view.delete_user', user_id=current_user.id) }}"
+        <a
+          href="{{ url_for('core_view.delete_user', user_id=current_user.id) }}"
           ><button class="btn btn-outline-danger">Yes</button></a
         >
       </div>
@@ -173,7 +174,7 @@
       <div class="row d-flex justify-content-center">
         <button
           type="submit"
-          class="col-12 col-md-5 btn btn-outline-danger mb-2  ms-4 ms-md-0"
+          class="col-12 col-md-5 btn btn-outline-danger mb-2 ms-4 ms-md-0"
           data-bs-toggle="modal"
           data-bs-target="#deleteConfirmation"
         >
@@ -184,4 +185,9 @@
   </div>
   <div class="col-1 col-lg-3"></div>
 </div>
+{% endblock %} {% block js %}
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='scripts/update_user.js') }}"
+></script>
 {% endblock %}
