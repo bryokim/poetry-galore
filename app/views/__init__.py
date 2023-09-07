@@ -1,7 +1,7 @@
 from flask import Blueprint, make_response, jsonify
 
 core_view = Blueprint("core_view", __name__)
-api_view = Blueprint("api_view", __name__, url_prefix="/api/v2")
+api_view = Blueprint("api_view", __name__, url_prefix="/api/v1")
 
 from .register import *
 from .login import *
