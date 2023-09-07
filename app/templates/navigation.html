@@ -88,7 +88,7 @@
               <li>
                 <a
                   class="dropdown-item"
-                  href="{{ url_for('accounts_view.logout') }}"
+                  href="{{ url_for('core_view.logout') }}"
                   >Logout</a
                 >
               </li>
@@ -108,7 +108,7 @@
           <li class="nav-item">
             <a
               class="nav-link p-0"
-              href="{{ url_for('accounts_view.register') }}"
+              href="{{ url_for('core_view.register') }}"
               ><button class="btn btn-outline-success border-0 btn-sm">
                 Signup
               </button></a
@@ -169,7 +169,7 @@
               </li>
               {% if current_user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('accounts_view.logout') }}"
+                <a class="nav-link" href="{{ url_for('core_view.logout') }}"
                   >Logout</a
                 >
               </li>

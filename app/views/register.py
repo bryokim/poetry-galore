@@ -1,10 +1,6 @@
 from datetime import timedelta
 from flask import (
-    abort,
-    current_app,
     flash,
-    jsonify,
-    make_response,
     request,
     redirect,
     render_template,
@@ -14,17 +10,16 @@ from flask_login import (
     login_required,
     login_user,
     logout_user,
-    fresh_login_required,
 )
 
 from app.models.user import User
 from app.models.engine.db_storage import DBStorage
 from app.forms.register_form import RegisterForm
 from app.utils.decorators import logout_required
-from app.views import accounts_view
+from app.views import core_view
 
 
-@accounts_view.route("/register", methods=["GET", "POST"])
+@core_view.route("/register", methods=["GET", "POST"])
 @logout_required
 def register():
     form = RegisterForm(request.form)
@@ -56,7 +51,7 @@ def register():
     return render_template("register.html", form=form)
 
 
-@accounts_view.route("/logout")
+@core_view.route("/logout")
 @login_required
 def logout():
     logout_user()
