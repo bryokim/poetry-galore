@@ -13,7 +13,6 @@ from .poems_likes import *
 from .comments import *
 from .categories import *
 from .themes import *
-from .search import *
 
 from .api import *
 
