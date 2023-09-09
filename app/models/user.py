@@ -39,7 +39,7 @@ class User(BaseModel, db.Model, UserMixin):
         passive_deletes=True,
     )
 
-    poem_likes = db.relationship(
+    user_likes = db.relationship(
         "Poem",
         secondary=poem_user,
         back_populates="likes",

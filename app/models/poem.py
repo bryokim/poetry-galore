@@ -102,5 +102,5 @@ class Poem(BaseModel, db.Model):
         "User",
         secondary=poem_user,
         viewonly=False,
-        back_populates="poem_likes",
+        back_populates="user_likes",
     )
