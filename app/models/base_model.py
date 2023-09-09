@@ -58,6 +58,7 @@ class BaseModel:
         """
         new_dict = {}
 
+        new_dict["id"] = self.id
         new_dict.update(self.__dict__)
 
         new_dict["created_at"] = datetime.isoformat(self.created_at)
