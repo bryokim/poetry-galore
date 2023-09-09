@@ -5,6 +5,7 @@ api_view = Blueprint("api_view", __name__, url_prefix="/api/v1")
 
 from .register import *
 from .login import *
+from .logout import *
 from .home import *
 
 from .users import *

@@ -6,11 +6,7 @@ from flask import (
     render_template,
     url_for,
 )
-from flask_login import (
-    login_required,
-    login_user,
-    logout_user,
-)
+from flask_login import login_user
 
 from app.models.user import User
 from app.models.engine.db_storage import DBStorage
@@ -49,11 +45,3 @@ def register():
         return redirect(url_for("core_view.login"))
 
     return render_template("register.html", form=form)
-
-
-@core_view.route("/logout")
-@login_required
-def logout():
-    logout_user()
-    flash("You were logged out.", "success")
-    return redirect(url_for("core_view.login"))
