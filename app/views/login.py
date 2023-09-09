@@ -36,6 +36,7 @@ def login():
                 next_url = request.args["next"]
                 return redirect(next_url)
 
+            flash("You were logged in", "info")
             return redirect(url_for("core_view.home"))
         else:
             flash("Invalid username/password", "danger")
