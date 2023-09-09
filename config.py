@@ -1,6 +1,6 @@
 from decouple import config
 
-DATABASE_URI = config("DATABASE_URL")
+DATABASE_URI = config("DATABASE_URL", "sqlite:///poetry_galore_db.sqlite")
 if DATABASE_URI.startswith("postgress://"):
     DATABASE_URI = DATABASE_URI.replace("postgress://", "postgresql://", 1)
 
@@ -30,8 +30,8 @@ class Config(object):
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     MAIL_DEBUG = False
-    MAIL_USERNAME = config("EMAIL_USER")
-    MAIL_PASSWORD = config("EMAIL_PASSWORD")
+    MAIL_USERNAME = config("EMAIL_USER", None)
+    MAIL_PASSWORD = config("EMAIL_PASSWORD", None)
 
 
 class DevelopmentConfig(Config):
@@ -45,7 +45,7 @@ class TestingConfig(Config):
     TESTING = True
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///testdb.sqlite"
-    BCRYPT_LOG_ROUNDS = 1
+    BCRYPT_LOG_ROUNDS = 4
     WTF_CSRF_ENABLED = False
 
 
