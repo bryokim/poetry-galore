@@ -91,7 +91,7 @@ $(document).ready(function () {
     reader.addEventListener("load", (event) => {
       const result = event.target.result;
       $("TEXTAREA#poem_body").val(result);
-      $("INPUT#title").val(file.name);
+      $("INPUT#title").val(file.name.split(".")[0]);
     });
 
     let allowedExtensions = /(\.doc|\.txt)$/i;
