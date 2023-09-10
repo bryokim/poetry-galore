@@ -42,9 +42,24 @@ class BaseModel:
             if "id" not in kwargs.keys():
                 self.id = str(uuid4())
 
-    # def save(self):
-    #     self.updated_at = datetime.utcnow()
-    #     storage.save(self)
+    def save(self, _db=None):
+        """Update the updated_at attribute, add the object
+        to the current database session and commit the changes.
+
+        Specify _db if you don't wish to use the default database
+        created during Flask app creation. Can be used in testing to
+        specify a testing database.
+
+        Args:
+            _db (object, optional): Database to use. Defaults to None.
+        """
+        from app.models.engine.db_storage import DBStorage
+
+        storage = DBStorage(_db)
+
+        self.updated_at = datetime.utcnow()
+        storage.new(self)
+        storage.save()
 
     def to_dict(self, password=True):
         """Get the dictionary representation of the object.
