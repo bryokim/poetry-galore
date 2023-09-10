@@ -11,8 +11,6 @@ class DBStorage(object):
     for interacting with the database.
     """
 
-    __session = db.session
-
     classes = {
         "Category": Category,
         "Comment": Comment,
@@ -21,8 +19,19 @@ class DBStorage(object):
         "User": User,
     }
 
-    # def __init__(self, db):
-    #     self.__session = db.session
+    def __init__(self, _db=None):
+        """Initialize a DBStorage instance.
+        If _db is None, the default database created during Flask app
+        creation will be used. You can specify _db to use a specific database
+        for example in testing.
+
+        Args:
+            _db (object, optional): Database to use. Defaults to None.
+        """
+        if _db is not None:
+            self.__session = _db.session
+        else:
+            self.__session = db.session
 
     def all(self, cls=None):
         """Return all objects on current database session of class cls.
