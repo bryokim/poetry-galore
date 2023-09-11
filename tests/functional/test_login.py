@@ -22,7 +22,7 @@ def test_login_get(client):
     THEN check that the response is valid
     """
     response = client.get("/login")
-    assert b"Sign in" in response.data
+    assert b"Login" in response.data
     assert b"Remember me" in response.data
 
 
