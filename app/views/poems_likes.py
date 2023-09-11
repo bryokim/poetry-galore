@@ -35,7 +35,7 @@ def get_poem_likes(poem_id):
     return make_response(jsonify({"likes": num}), 200)
 
 
-@core_view.route("/user/likes")
+@core_view.route("/user/liked")
 @login_required
 def get_user_likes():
     """Get number of poems user has liked.
@@ -60,6 +60,31 @@ def get_user_likes():
                     )
                     for poem_id, _ in poem_user_id_tuple_list
                 ],
+            }
+        ),
+        200,
+    )
+
+
+@core_view.route("/user/likes")
+@login_required
+def get_user_likes_received():
+    """Get number of likes the user has received in all
+    their poems.
+
+    Returns:
+        dict: A dict with a key of likes received.
+    """
+
+    likes_received = 0
+
+    for poem in current_user.poems:
+        likes_received += len(poem.likes)
+
+    return make_response(
+        jsonify(
+            {
+                "likes": likes_received,
             }
         ),
         200,
