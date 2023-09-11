@@ -48,19 +48,21 @@ def test_base_model_with_kwargs():
     WHEN a new BaseModel is created with keyword arguments
     THEN check id, created_at and updated_at are defined correctly
     """
+    created_at = (datetime.now()).isoformat()
+    updated_at = (datetime.now()).isoformat()
 
     base_model = BaseModel(
         id="one",
-        created_at=(datetime.now()).isoformat(),
-        updated_at=(datetime.now()).isoformat(),
+        created_at=created_at,
+        updated_at=updated_at,
     )
     assert base_model.id == "one"
     assert type(base_model.id) is str
 
-    assert base_model.created_at is not None
+    assert base_model.created_at == datetime.fromisoformat(created_at)
     assert type(base_model.created_at) is datetime
 
-    assert base_model.updated_at is not None
+    assert base_model.updated_at == datetime.fromisoformat(updated_at)
     assert type(base_model.updated_at) is datetime
 
 
