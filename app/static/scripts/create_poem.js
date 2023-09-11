@@ -139,9 +139,9 @@ $(document).ready(function () {
     createCategory(`{ "name": "${name}" }`)
       .then((data) => {
         $("SELECT#category").append(
-          `<option value=${name} id="${name}-1">${name}</option>`
+          `<option value=${data.name} id="${data.name}-1">${data.name}</option>`
         );
-        $(`OPTION#${name}-1`)[0].selected = true;
+        $(`OPTION#${data.name}-1`)[0].selected = true;
       })
       .catch((error) => {
         console.log(error.responseJSON.error);
