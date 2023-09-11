@@ -83,10 +83,10 @@ $(document).ready(function () {
         likeIcon.css("color", "#f20202");
       });
     } else {
-      likeIcon.css("color", "");
       $.get(`/api/v1/poems/${poemId}/unlike`, function (data) {
         likeCount.html(data.likes);
         likeIcon.removeClass("fa-solid").addClass("fa-regular");
+        likeIcon.css("color", "");
       });
     }
   });
