@@ -1,10 +1,27 @@
-# poetry-galore
+# ![Alt logo](/docs/images/logo-icon.svg)Poetry Galore
+
+![Alt screenshot](/docs/images/screenshot.png)
 
 For the love of poetry.
 
-## Starting up the application
+You can view the live demo [here](<https://bryokim.github.io/poetry-galore>)
 
-To run the application, you first need to clone this [repository](<https://github.com/bryokim/poetry-galore>) and run `cd poetry-galore`.
+_**Authors:**_
+
+- **Brian**
+
+[![Alt github](https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)](<https://github.com/bryokim>)
+[![Alt linkedin](https://img.shields.io/badge/LinkedIn-0A66C2.svg?style=for-the-badge&logo=LinkedIn&logoColor=white)](<https://www.linkedin.com/in/brian-kimathi01/>)
+
+- **Reagan**
+
+[![Alt github](https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)](<https://github.com/thatboyreegan>)
+[![Alt linkedin](https://img.shields.io/badge/LinkedIn-0A66C2.svg?style=for-the-badge&logo=LinkedIn&logoColor=white)](<https://www.linkedin.com/in/brian-kimathi01/>)
+
+## Installation
+
+To run the application, you first need to clone this [repository](<https://github.com/bryokim/poetry-galore>) and move into the
+poetry-galore directory.
 
 Next you need to install all the requirements required to run the application.
 
@@ -13,72 +30,78 @@ kim@eternity ~/poetry-galore
 $ pip install -r requirements.txt
 ```
 
-You also need to have a MySQL installation in order for the application to be able
-to read and write data to the database. You can follow this [tutorial](.) to install and set up
-your MySQL.
+## Usage
 
-You'll need to set the following environment variables that are required by the application.
+### Setup Database
 
-```Text
-APP_SETTINGS -> Sets the configuration object that contains the configuration on which the app is to run on.
-SECRET_KEY -> Sets the secret key.
-SECURITY_PASSWORD_SALT -> Sets the salt used for password encryption.
-FLASK_APP -> Name of the flask application to run. In this case it's "app".
-DATABASE_URL -> The MySQL database to connect to.
-```
+You'll also need a database to store and persist the data. You can opt to use SQLite for ease of setup or MySQL if you want more control over the database.
 
-Next initialize and upgrade the database.
+- #### Using SQLite
+
+To use the SQLite database, set the `DATABASE_URL` env variable to `sqlite:///<db_name>.sqlite`
+
+For example:
 
 ```Bash
-kim@eternity ~/poetry-galore
-$ flask db init
-
-kim@eternity ~/poetry-galore
-$ flask db migrate
-
-kim@eternity ~/poetry-galore
-$ flask db upgrade
+export DATABASE_URL="sqlite:///poetry_galore_db.sqlite"
 ```
+
+- #### Using MySQL
+
+First of all you need to have MySQL installed. You can follow this [tutorial](.) to install and set up
+your MySQL.
+
+After installing MySQL, you can create a new database to be used.
+
+```Bash
+mysql -u <username> -p -e 'CREATE DATABASE <db_name>'
+```
+
+Replace `username` with your MySQL username and `db_name` with the database name.
+
+Now set the `DATABASE_URL` env variable to `mysql+mysqldb://<username>:<password>@localhost/<db_name>`
+
+For example:
+
+```Bash
+export DATABASE_URL="mysql+mysqldb://root:password@localhost/poetry_galore_db"
+```
+
+#### Initialize Database
+
+After setting up the database of your choice, you need to initialize and upgrade the database. Run the following commands to finish setting up your database.
+
+```Bash
+flask db init
+flask db migrate
+flask db upgrade
+```
+
+### Set env variables
+
+Apart from `DATABASE_URL`, you'll be required to set the following environment variables.
+
+| Env variable | Description | Value |
+| :--- | --- |--- |
+| `FLASK_APP` | Flask application to run | `app` |
+| `APP_SETTINGS` |  Configuration to be used by the app as in [config.py](config.py). | `config.TestingConfig` -> Testing config. `config.DevelopmentConfig` -> Development config. `config.ProductionConfig` -> Production config.|
+| `SECRET_KEY`| Secret key for session encryption. | A secret value. Defaults to `guess-me` |
+| `SECURITY_PASSWORD_SALT` | Salt used for password encryption | A secret value. Defaults to `very-important` |
+
+### Starting the app
 
 After setting the environment variables, you can start the app.
 
 ```Bash
-kim@eternity ~/poetry-galore
-$ flask run
- * Serving Flask app 'app'
- * Debug mode: on
-WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
- * Running on http://127.0.0.1:5000
-Press CTRL+C to quit
+flask run
 ```
 
 You can navigate to <http://127.0.0.1:5000> to view the application and use it.
 
-## Project Summary
+## Contributing
 
-The app folder contains all code related to the Flask application.
-The [__init__.py](./app/__init__.py) file in app directory contains the `create_app()` function that creates and
-adds required extensions and configuration to the application.
+You're always welcome to contributing.
 
-The [models](./app/models) directory contains the database models used in creating the
-database tables. The models represent each basic unit that is required by the app.
-It also includes a [database storage class](./app/models/engine/db_storage.py) that provides
-methods used in querying the database and writing to it.
+## License
 
-The [views](./app/views) folder contains all the app endpoints and functions that define
-the logic behind each one of them. Each file in views has endpoints specific to a certain
-object in the database model.
-
-The [templates](./app/templates) directory provides Jinja HTML templates that are used for
-rendering the data acquired from the endpoints.
-
-The [forms](./app/forms) directory includes various forms used for collecting information
-from the user. These include the login, signup, poem and even profile updates.
-
-The [utils](./app/utils) provides common functions that are used severally in different modules such as decorators for the endpoints in views.
-
-All static files can be found in [static](./app/static). That includes JavaScript scripts, CSS files and images.
-
-The [config.py](./config.py) file found at the root of the project is used to provide
-configuration that is loaded during app creation. Configurations can be found in form of classes
-that can be loaded into your flask app.
+`poetry-galore` is licensed under the [MIT](LICENSE) license.
