@@ -32,6 +32,17 @@ $ pip install -r requirements.txt
 
 ## Usage
 
+### Set env variables
+
+You'll be required to set the following environment variables.
+
+| Env variable | Description | Value |
+| :--- | --- |--- |
+| `FLASK_APP` | Flask application to run | `app` |
+| `APP_SETTINGS` |  Configuration to be used by the app as in [config.py](config.py). | `config.TestingConfig` -> Testing config. `config.DevelopmentConfig` -> Development config. `config.ProductionConfig` -> Production config.|
+| `SECRET_KEY`| Secret key for session encryption. | A secret value. Defaults to `guess-me` |
+| `SECURITY_PASSWORD_SALT` | Salt used for password encryption | A secret value. Defaults to `very-important` |
+
 ### Setup Database
 
 You'll also need a database to store and persist the data. You can opt to use SQLite for ease of setup or MySQL if you want more control over the database.
@@ -76,17 +87,6 @@ flask db init
 flask db migrate
 flask db upgrade
 ```
-
-### Set env variables
-
-Apart from `DATABASE_URL`, you'll be required to set the following environment variables.
-
-| Env variable | Description | Value |
-| :--- | --- |--- |
-| `FLASK_APP` | Flask application to run | `app` |
-| `APP_SETTINGS` |  Configuration to be used by the app as in [config.py](config.py). | `config.TestingConfig` -> Testing config. `config.DevelopmentConfig` -> Development config. `config.ProductionConfig` -> Production config.|
-| `SECRET_KEY`| Secret key for session encryption. | A secret value. Defaults to `guess-me` |
-| `SECURITY_PASSWORD_SALT` | Salt used for password encryption | A secret value. Defaults to `very-important` |
 
 ### Starting the app
 
