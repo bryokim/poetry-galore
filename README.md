@@ -4,7 +4,9 @@
 
 For the love of poetry.
 
-You can view the live demo [here](<https://bryokim.github.io/poetry-galore>)
+You can view the live demo [here].(<https://bryokim.github.io/poetry-galore>)
+
+[Blog Post](<https://medium.com/@reaganronald491/into-the-making-of-poetry-galore-8a386e02be49>) on this project.
 
 _**Authors:**_
 
@@ -16,7 +18,7 @@ _**Authors:**_
 - **Reagan**
 
 [![Alt github](https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)](<https://github.com/thatboyreegan>)
-[![Alt linkedin](https://img.shields.io/badge/LinkedIn-0A66C2.svg?style=for-the-badge&logo=LinkedIn&logoColor=white)](<https://www.linkedin.com/in/brian-kimathi01/>)
+[![Alt linkedin](https://img.shields.io/badge/LinkedIn-0A66C2.svg?style=for-the-badge&logo=LinkedIn&logoColor=white)](<www.linkedin.com/in/reagan-ronald-9507621a3>)
 
 ## Installation
 
@@ -26,8 +28,7 @@ poetry-galore directory.
 Next you need to install all the requirements required to run the application.
 
 ```Bash
-kim@eternity ~/poetry-galore
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -59,7 +60,7 @@ export DATABASE_URL="sqlite:///poetry_galore_db.sqlite"
 
 - #### Using MySQL
 
-First of all you need to have MySQL installed. You can follow this [tutorial](.) to install and set up
+First of all you need to have MySQL installed. You can follow this [tutorial](<https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04>) to install and set up
 your MySQL.
 
 After installing MySQL, you can create a new database to be used.
